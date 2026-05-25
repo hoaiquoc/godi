@@ -26,12 +26,13 @@
       <h1>Payment</h1>
       <p>
         Payment là trục xử lý thu tiền và đối soát giao dịch của GODI. Module này cần hỗ trợ nhiều phương thức thanh toán,
-        phản hồi trạng thái theo thời gian thực, quản lý lỗi giao dịch và cung cấp công cụ đối soát mạnh ở cấp quản trị.
+        phản hồi trạng thái theo thời gian thực, quản lý lỗi giao dịch và cung cấp công cụ đối soát mạnh ở cấp quản trị,
+        trong đó GODI PORTAL có vai trò liên kết VPBank để tiếp nhận giao dịch từ GODI App.
       </p>
       <div class="detail-meta">
         <span class="detail-chip">Thanh toán nhanh tại POS và App</span>
         <span class="detail-chip">Đối soát tập trung trên PORTAL</span>
-        <span class="detail-chip">Liên kết trực tiếp với bán hàng và kế toán</span>
+        <span class="detail-chip">Liên kết VPBank cho giao dịch từ GODI App</span>
       </div>
 
       <div class="scope-grid">
@@ -48,7 +49,7 @@
         <article class="scope-card">
           <span class="scope-card-tag">GODI PORTAL</span>
           <h3>Đối soát và giám sát</h3>
-          <p>Giám sát trạng thái payment, lệch giao dịch, hoàn tiền, retry và tổng hợp báo cáo theo cổng thanh toán hoặc theo chi nhánh.</p>
+          <p>Giám sát trạng thái payment, lệch giao dịch, hoàn tiền, retry, liên kết VPBank cho GODI App và tổng hợp báo cáo theo cổng thanh toán hoặc theo chi nhánh.</p>
         </article>
       </div>
     </section>
@@ -99,11 +100,13 @@
           <ul class="page-list">
             <li>Page dashboard payment để xem tổng giao dịch, tỷ lệ thành công, lỗi và thời gian phản hồi theo cổng.</li>
             <li>Page danh sách giao dịch payment toàn hệ với bộ lọc theo nền tảng, phương thức, trạng thái và điểm bán.</li>
+            <li>Page quản lý liên kết VPBank để cấu hình kết nối, tài khoản nhận tiền và trạng thái đồng bộ giao dịch từ GODI App.</li>
             <li>Page chi tiết giao dịch payment gồm dữ liệu request, response, callback, đơn hàng gốc và hóa đơn liên quan.</li>
             <li>Page đối soát payment với đơn hàng để phát hiện đã thu tiền nhưng chưa chốt đơn hoặc ngược lại.</li>
+            <li>Page đối soát giao dịch VPBank với giao dịch phát sinh từ GODI App để kiểm tra lệch tiền, lệch trạng thái hoặc giao dịch treo.</li>
             <li>Page đối soát payment với sao kê cổng thanh toán, file ngân hàng hoặc báo cáo đối tác.</li>
             <li>Page quản lý hoàn tiền, partial refund, giao dịch nghi ngờ và ticket xử lý sự cố payment.</li>
-            <li>Page cấu hình cổng thanh toán, terminal, merchant ID, chi nhánh áp dụng và giới hạn nghiệp vụ.</li>
+            <li>Page cấu hình cổng thanh toán, VPBank, terminal, merchant ID, chi nhánh áp dụng và giới hạn nghiệp vụ.</li>
             <li>Page nhật ký retry callback và lịch sử xử lý transaction lỗi.</li>
           </ul>
         </article>

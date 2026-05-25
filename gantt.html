@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GODI - Gantt Chart Delivery</title>
+  <meta
+    name="description"
+    content="Gantt chart cho kế hoạch delivery theo từng tuần của hệ thống GODI."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="icon" type="image/png" href="images/Logo_GODI_1779421321268.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="detail-page">
+  <main class="detail-shell">
+    <section class="detail-page-header">
+      <div class="detail-header-top">
+        <span class="detail-page-tag">Gantt Chart</span>
+        <a class="back-link" href="index.html#weekly-plan">Quay lại kế hoạch theo tuần</a>
+      </div>
+      <h1>Gantt Chart Delivery</h1>
+      <p>
+        Page này chuyển phần delivery theo tuần sang góc nhìn gantt chart để theo dõi khoảng thời gian thực hiện,
+        mức độ chồng lấn giữa các luồng công việc và thứ tự ưu tiên triển khai trong toàn hệ sinh thái GODI.
+      </p>
+      <div class="detail-meta">
+        <span class="detail-chip">Bám theo mốc 25/05/2026 - 31/08/2026</span>
+        <span class="detail-chip">Ưu tiên GODI PORTAL và GODI App</span>
+        <span class="detail-chip">Thể hiện song song theo từng wave delivery</span>
+      </div>
+
+      <div class="gantt-summary">
+        <article class="gantt-summary-card">
+          <span class="detail-chip">Chuẩn bị</span>
+          <h3>Tuần 1</h3>
+          <p>Thiết lập môi trường develop, rà soát module hiện có và chuẩn hóa cấu hình ban đầu.</p>
+        </article>
+        <article class="gantt-summary-card">
+          <span class="detail-chip">Nền tảng lõi</span>
+          <h3>Tuần 2 - 7</h3>
+          <p>Triển khai master data, phân quyền, payment, bán hàng, hóa đơn và các luồng chính trên app.</p>
+        </article>
+        <article class="gantt-summary-card">
+          <span class="detail-chip">Ổn định</span>
+          <h3>Tuần 8 - 11</h3>
+          <p>Đồng bộ dữ liệu, triển khai kế toán, thuế, báo cáo và kiểm thử tích hợp toàn hệ thống.</p>
+        </article>
+        <article class="gantt-summary-card">
+          <span class="detail-chip">Release</span>
+          <h3>Tuần 12</h3>
+          <p>Chốt bug, nghiệm thu toàn bộ nhóm chức năng và chuẩn bị vận hành thực tế.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Legend</h2>
+        <p class="detail-note">Màu sắc giúp phân biệt luồng công việc chính theo nền tảng hoặc loại tích hợp.</p>
+      </div>
+
+      <div class="gantt-legend">
+        <div class="gantt-legend-list">
+          <span class="gantt-legend-item"><span class="gantt-legend-swatch portal"></span>GODI PORTAL</span>
+          <span class="gantt-legend-item"><span class="gantt-legend-swatch web"></span>GODI POS (Web)</span>
+          <span class="gantt-legend-item"><span class="gantt-legend-swatch app"></span>GODI App</span>
+          <span class="gantt-legend-item"><span class="gantt-legend-swatch integration"></span>Tích hợp / Đối soát</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Bảng Gantt Chart</h2>
+        <p class="detail-note">Biểu đồ bên dưới gom các khoảng tuần đúng theo delivery hiện tại thay vì chia thành từng ngày riêng lẻ.</p>
+      </div>
+
+      <div class="gantt-table-wrap">
+        <div class="gantt-table">
+          <div class="gantt-row header">
+            <div class="gantt-cell">Nhóm công việc</div>
+            <div class="gantt-cell">Tuần 1</div>
+            <div class="gantt-cell">Tuần 2 - 3</div>
+            <div class="gantt-cell">Tuần 4 - 6</div>
+            <div class="gantt-cell">Tuần 7</div>
+            <div class="gantt-cell">Tuần 8</div>
+            <div class="gantt-cell">Tuần 9</div>
+            <div class="gantt-cell">Tuần 10</div>
+            <div class="gantt-cell">Tuần 11 - 12</div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Môi trường develop</h4>
+              <p>Chuẩn bị nền tảng phát triển, build và kiểm thử ban đầu.</p>
+            </div>
+            <div class="gantt-bar portal">PORTAL + App</div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Master data và phân quyền</h4>
+              <p>Phát triển dữ liệu lõi, phân quyền và kết nối app với dữ liệu khai báo.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar portal">PORTAL</div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Payment, POS Web và hóa đơn</h4>
+              <p>Triển khai bán hàng tại điểm bán, payment, đối soát và phát hành hóa đơn.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar web">POS (Web)</div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>GODI App bán hàng và payment</h4>
+              <p>Hoàn thiện các luồng bán hàng và thanh toán còn lại trên app.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar app">GODI App</div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Ổn định dữ liệu liên nền tảng</h4>
+              <p>Đồng bộ giao dịch, payment, hóa đơn và dữ liệu nghiệp vụ giữa các nền tảng.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar integration">Tích hợp</div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Kế toán và thuế</h4>
+              <p>Đối soát giao dịch, bút toán tổng hợp và kê khai thuế trên PORTAL.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar portal">PORTAL</div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Báo cáo và dashboard</h4>
+              <p>Xây dựng báo cáo điều hành, dashboard quản trị và chỉ số theo dõi toàn hệ sinh thái.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar portal">PORTAL</div>
+            <div class="gantt-cell"></div>
+          </div>
+
+          <div class="gantt-row">
+            <div class="gantt-task">
+              <h4>Kiểm thử tích hợp và release</h4>
+              <p>Kiểm thử end-to-end, khóa phạm vi và chuẩn bị nghiệm thu release đầu tiên.</p>
+            </div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-cell"></div>
+            <div class="gantt-bar integration">Tester + Toàn đội</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

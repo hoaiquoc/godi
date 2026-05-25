@@ -409,6 +409,13 @@ button {
   margin-bottom: 18px;
 }
 
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 .section-heading h2 {
   font-size: clamp(1.6rem, 2vw, 2.4rem);
 }
@@ -614,6 +621,18 @@ button {
   margin: 0;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.weekly-purpose {
+  margin-top: 14px !important;
+  padding: 12px 14px;
+  border: 1px solid rgba(79, 140, 255, 0.18);
+  border-radius: 16px;
+  background: rgba(79, 140, 255, 0.08);
+}
+
+.weekly-purpose strong {
+  color: var(--text);
 }
 
 .weekly-feature-list {
@@ -878,6 +897,167 @@ button {
   margin-bottom: 0;
 }
 
+.gantt-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+
+.gantt-summary-card,
+.gantt-table-wrap,
+.gantt-legend {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  background: var(--panel);
+  backdrop-filter: blur(16px);
+}
+
+.gantt-summary-card h3,
+.gantt-legend h3 {
+  margin: 14px 0 8px;
+}
+
+.gantt-summary-card p,
+.gantt-legend p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.gantt-legend {
+  margin-bottom: 24px;
+}
+
+.gantt-legend-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.gantt-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.gantt-legend-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+}
+
+.gantt-legend-swatch.portal {
+  background: linear-gradient(135deg, #4f8cff, #60a5fa);
+}
+
+.gantt-legend-swatch.web {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+}
+
+.gantt-legend-swatch.app {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+.gantt-legend-swatch.integration {
+  background: linear-gradient(135deg, #34d399, #10b981);
+}
+
+.gantt-table-wrap {
+  overflow-x: auto;
+}
+
+.gantt-table {
+  min-width: 980px;
+}
+
+.gantt-row {
+  display: grid;
+  grid-template-columns: 280px repeat(8, minmax(72px, 1fr));
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.gantt-row:last-child {
+  margin-bottom: 0;
+}
+
+.gantt-row.header {
+  margin-bottom: 14px;
+}
+
+.gantt-task,
+.gantt-cell,
+.gantt-bar {
+  border-radius: 16px;
+}
+
+.gantt-task,
+.gantt-cell {
+  min-height: 58px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.gantt-task h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+}
+
+.gantt-task p,
+.gantt-cell {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.gantt-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+}
+
+.gantt-bar {
+  min-height: 58px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.gantt-bar.portal {
+  background: linear-gradient(135deg, #4f8cff, #60a5fa);
+}
+
+.gantt-bar.web {
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+}
+
+.gantt-bar.app {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+.gantt-bar.integration {
+  background: linear-gradient(135deg, #34d399, #10b981);
+}
+
 .detail-section-heading {
   margin-bottom: 16px;
 }
@@ -1138,6 +1318,7 @@ button {
   .feature-catalog,
   .detail-grid,
   .scope-grid,
+  .gantt-summary,
   .staffing-summary,
   .staffing-grid,
   .hero-stats {

@@ -342,7 +342,9 @@ button {
 
 .platform-stack,
 .platform-grid,
-.roadmap-grid {
+.roadmap-grid,
+.plan-grid,
+.ownership-grid {
   display: grid;
   gap: 16px;
 }
@@ -415,6 +417,66 @@ button {
 
 .platform-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.plan-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ownership-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.plan-card,
+.ownership-card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.plan-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(79, 140, 255, 0.16);
+  color: #9fc2ff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.plan-card h3,
+.ownership-card h3 {
+  margin: 14px 0 10px;
+}
+
+.plan-card p,
+.ownership-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.plan-list {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.plan-list li + li {
+  margin-top: 6px;
+}
+
+.ownership-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .platform-card ul {
@@ -914,6 +976,8 @@ button {
 
   .hero,
   .platform-grid,
+  .plan-grid,
+  .ownership-grid,
   .roadmap-grid,
   .weekly-grid,
   .feature-catalog,

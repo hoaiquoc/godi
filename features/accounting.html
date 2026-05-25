@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GODI - Chi tiết tính năng Kế toán</title>
+  <meta
+    name="description"
+    content="Chi tiết tính năng Kế toán của hệ thống GODI, gồm toàn bộ page cần có trên GODI PORTAL và các liên kết dữ liệu từ POS Web, GODI App."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="detail-page">
+  <main class="detail-shell">
+    <section class="detail-page-header">
+      <div class="detail-header-top">
+        <span class="detail-page-tag">Module chi tiết</span>
+        <a class="back-link" href="../index.html#features">Quay lại danh mục tính năng</a>
+      </div>
+      <h1>Kế toán</h1>
+      <p>
+        Module kế toán tại GODI đóng vai trò tổng hợp và chuẩn hóa số liệu tài chính từ bán hàng, payment, hóa đơn
+        và các nghiệp vụ vận hành khác. Đây là module chủ yếu đặt trên GODI PORTAL nhưng phải nhận dữ liệu chuẩn
+        từ tất cả nền tảng còn lại.
+      </p>
+      <div class="detail-meta">
+        <span class="detail-chip">Quản trị tập trung trên PORTAL</span>
+        <span class="detail-chip">Nhận dữ liệu từ bán hàng, payment và hóa đơn</span>
+        <span class="detail-chip">Phục vụ báo cáo tài chính và đối soát</span>
+      </div>
+
+      <div class="scope-grid">
+        <article class="scope-card">
+          <span class="scope-card-tag">GODI PORTAL</span>
+          <h3>Hạch toán và kiểm tra</h3>
+          <p>Thiết lập tài khoản kế toán, bút toán, kỳ kế toán, sổ sách, công nợ, doanh thu và báo cáo tài chính nghiệp vụ.</p>
+        </article>
+        <article class="scope-card">
+          <span class="scope-card-tag">POS Web / App</span>
+          <h3>Gửi dữ liệu nguồn</h3>
+          <p>Cung cấp dữ liệu giao dịch, thanh toán, hoàn tiền, doanh thu theo thời gian thực hoặc theo lô về hệ thống kế toán.</p>
+        </article>
+        <article class="scope-card">
+          <span class="scope-card-tag">Liên kết hệ thống</span>
+          <h3>Đối soát nhiều nguồn</h3>
+          <p>Kế toán phải đối soát được giữa đơn hàng, payment, hóa đơn, vận hành và các nguồn phát sinh chênh lệch.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Danh sách page cần có</h2>
+        <p class="detail-note">Các page kế toán nên ưu tiên khả năng kiểm tra, tổng hợp, đối chiếu và khóa sổ theo kỳ.</p>
+      </div>
+
+      <div class="detail-grid">
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">GODI PORTAL</span>
+            <h3>Page cấu hình kế toán</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page danh mục tài khoản kế toán và mapping tài khoản theo từng loại giao dịch.</li>
+            <li>Page cấu hình kỳ kế toán, trạng thái mở sổ, khóa sổ và người chịu trách nhiệm.</li>
+            <li>Page cấu hình quy tắc hạch toán cho bán hàng, payment, hóa đơn, hoàn tiền, chiết khấu và dịch vụ.</li>
+            <li>Page cấu hình mã chi nhánh, trung tâm doanh thu, mã bộ phận và sơ đồ hạch toán nội bộ.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">GODI PORTAL</span>
+            <h3>Page nghiệp vụ kế toán chính</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page tổng hợp doanh thu theo ngày, chi nhánh, nền tảng và trạng thái hạch toán.</li>
+            <li>Page tạo hoặc sinh tự động bút toán từ giao dịch bán hàng và payment.</li>
+            <li>Page danh sách chứng từ kế toán, lọc theo loại chứng từ, kỳ kế toán và trạng thái xử lý.</li>
+            <li>Page chi tiết chứng từ để xem nguồn dữ liệu gốc, bút toán phát sinh và lịch sử chỉnh sửa.</li>
+            <li>Page quản lý công nợ khách hàng, công nợ đối tác và lịch sử đối chiếu công nợ.</li>
+            <li>Page quản lý hoàn tiền, giảm trừ doanh thu và điều chỉnh chứng từ liên quan.</li>
+            <li>Page sổ nhật ký chung, sổ cái, sổ chi tiết và bảng cân đối phát sinh.</li>
+            <li>Page khóa sổ cuối kỳ, theo dõi các lỗi còn tồn trước khi chốt kỳ kế toán.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Đối soát</span>
+            <h3>Page kiểm tra chênh lệch số liệu</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page đối soát doanh thu giữa đơn hàng, payment và hóa đơn.</li>
+            <li>Page đối soát tiền mặt theo ca làm việc, theo điểm bán và theo kỳ.</li>
+            <li>Page đối soát giao dịch QR, thẻ, chuyển khoản với báo cáo cổng payment.</li>
+            <li>Page danh sách chênh lệch cần xử lý thủ công hoặc cần chuyển lại nguồn dữ liệu.</li>
+            <li>Page nhật ký thao tác điều chỉnh số liệu và phê duyệt điều chỉnh.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Báo cáo tài chính</span>
+            <h3>Page đầu ra phục vụ quản trị</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page báo cáo doanh thu theo chi nhánh, nền tảng và loại hình kinh doanh.</li>
+            <li>Page báo cáo công nợ, dòng tiền, chiết khấu và hoàn tiền.</li>
+            <li>Page báo cáo lãi gộp, phân tích doanh thu theo nhóm sản phẩm hoặc dịch vụ.</li>
+            <li>Page báo cáo phục vụ kiểm toán nội bộ, tra cứu chứng từ và truy vết nguồn gốc số liệu.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,16 +1,33 @@
 const themeToggle = document.getElementById("toggleTheme");
 const sidebarToggle = document.getElementById("toggleSidebar");
 const sidePanel = document.getElementById("sidePanel");
+const mobileNavOverlay = document.getElementById("mobileNavOverlay");
 const floatingControls = document.getElementById("floatingControls");
 const floatingMenuToggle = document.getElementById("toggleFloatingMenu");
 const navLinks = document.querySelectorAll(".nav-link");
 const filters = document.querySelectorAll(".roadmap-filter");
 const roadmapCards = document.querySelectorAll(".roadmap-card");
 
+const isMobileViewport = () => window.innerWidth <= 1200;
+
 const savedTheme = localStorage.getItem("godi-theme");
 if (savedTheme === "light") {
   document.body.classList.add("light-theme");
 }
+
+const syncResponsiveSidebar = () => {
+  if (!sidePanel) {
+    return;
+  }
+
+  if (isMobileViewport()) {
+    sidePanel.classList.add("collapsed");
+  } else {
+    sidePanel.classList.remove("collapsed");
+  }
+
+  syncSidebarState();
+};
 
 themeToggle?.addEventListener("click", () => {
   document.body.classList.toggle("light-theme");
@@ -24,6 +41,13 @@ const syncSidebarState = () => {
     "aria-label",
     isCollapsed ? "Mở menu điều hướng" : "Ẩn menu điều hướng"
   );
+  sidebarToggle?.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+
+  if (isMobileViewport()) {
+    document.body.classList.toggle("mobile-nav-open", !isCollapsed);
+  } else {
+    document.body.classList.remove("mobile-nav-open");
+  }
 };
 
 const syncFloatingMenuState = () => {
@@ -42,18 +66,38 @@ sidebarToggle?.addEventListener("click", () => {
   syncSidebarState();
 });
 
+mobileNavOverlay?.addEventListener("click", () => {
+  if (!isMobileViewport()) {
+    return;
+  }
+
+  sidePanel?.classList.add("collapsed");
+  syncSidebarState();
+});
+
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
     navLinks.forEach((item) => item.classList.remove("active"));
     link.classList.add("active");
 
-    if (window.innerWidth <= 1200) {
+    if (isMobileViewport()) {
       sidePanel?.classList.add("collapsed");
       syncSidebarState();
       floatingControls?.classList.remove("open");
       syncFloatingMenuState();
     }
   });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !isMobileViewport()) {
+    return;
+  }
+
+  sidePanel?.classList.add("collapsed");
+  floatingControls?.classList.remove("open");
+  syncSidebarState();
+  syncFloatingMenuState();
 });
 
 filters.forEach((button) => {
@@ -94,5 +138,6 @@ const observer = new IntersectionObserver(
 
 sections.forEach((section) => observer.observe(section));
 
-syncSidebarState();
+window.addEventListener("resize", syncResponsiveSidebar);
+syncResponsiveSidebar();
 syncFloatingMenuState();

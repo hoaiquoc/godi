@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GODI - Demo hệ thống Kế toán</title>
+  <meta
+    name="description"
+    content="Demo tương tác cho module Kế toán: mock dữ liệu đơn hàng, mapping tài khoản, chứng từ phát sinh, bút toán và báo cáo."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="detail-page demo-fullwidth">
+  <main class="detail-shell">
+    <section class="detail-page-header">
+      <div class="detail-header-top">
+        <span class="detail-page-tag">Demo tương tác</span>
+        <div class="header-link-group">
+          <a class="back-link" href="accounting.html">Quay lại tài liệu Kế toán</a>
+          <a class="back-link" href="../index.html#features">Danh mục tính năng</a>
+        </div>
+      </div>
+      <h1>Demo hệ thống Kế toán</h1>
+      <p>
+        Trang này dùng data mock để mô phỏng luồng: đơn hàng nhiều mặt hàng → resolve mapping → sinh chứng từ → ghi sổ → lên báo cáo.
+        Mục tiêu là Dev có thể nhìn vào output (bút toán và dimension) để code đúng tự động.
+      </p>
+      <div class="detail-meta">
+        <span class="detail-chip">Mock dữ liệu</span>
+        <span class="detail-chip">Tự sinh chứng từ</span>
+        <span class="detail-chip">Tự lên báo cáo</span>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Chạy thử scenario</h2>
+        <p class="detail-note">Chọn scenario, cấu hình mapping, sau đó xem chứng từ/bút toán/báo cáo được sinh tự động.</p>
+      </div>
+
+      <article class="detail-block">
+        <div class="detail-block-header">
+          <span class="detail-chip">Điều khiển</span>
+          <h3>Scenario & cấu hình</h3>
+        </div>
+        <div class="demo-toolbar">
+          <label class="demo-field">
+            <span class="demo-label">Scenario</span>
+            <select id="scenarioSelect" class="demo-select"></select>
+          </label>
+          <label class="demo-field">
+            <span class="demo-label">Gom giá vốn</span>
+            <select id="cogsModeSelect" class="demo-select">
+              <option value="byWarehouse">Theo kho (khuyến nghị)</option>
+              <option value="total">Tổng (1 dòng)</option>
+            </select>
+          </label>
+          <label class="demo-field">
+            <span class="demo-label">Tài khoản ngân hàng</span>
+            <select id="bankModeSelect" class="demo-select">
+              <option value="112">112 (ngân hàng)</option>
+              <option value="113">113 (chờ đối soát)</option>
+            </select>
+          </label>
+          <label class="demo-field demo-field-inline">
+            <span class="demo-label">Kết chuyển cuối kỳ</span>
+            <div class="demo-toggle">
+              <input id="closingToggle" class="demo-checkbox" type="checkbox">
+              <span class="demo-toggle-text">Bật kết chuyển</span>
+            </div>
+          </label>
+          <label class="demo-field">
+            <span class="demo-label">Kỳ kết chuyển</span>
+            <select id="closingPeriodSelect" class="demo-select">
+              <option value="2026-06">06/2026</option>
+              <option value="2026-07">07/2026</option>
+              <option value="2026-08">08/2026</option>
+            </select>
+          </label>
+          <button id="rebuildBtn" class="btn btn-primary demo-btn" type="button">Sinh chứng từ</button>
+        </div>
+        <p class="detail-note demo-hint">
+          Bấm vào từng chứng từ hoặc bút toán để mở slideover xem chi tiết JSON và journal lines.
+        </p>
+      </article>
+
+      <div class="detail-grid">
+        <div>
+          <article class="detail-block">
+            <div class="detail-block-header">
+              <span class="detail-chip">Input</span>
+              <h3>Đơn hàng (mock)</h3>
+            </div>
+            <div id="orderSummary" class="demo-kv"></div>
+            <div class="demo-table-wrap">
+              <table class="demo-table" id="orderLinesTable">
+                <thead>
+                  <tr>
+                    <th>Mặt hàng</th>
+                    <th>Loại</th>
+                    <th>Nhóm</th>
+                    <th>Kho</th>
+                    <th>SL</th>
+                    <th>Đơn giá (chưa VAT)</th>
+                    <th>VAT</th>
+                    <th>Thành tiền</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="demo-subgrid">
+              <div>
+                <div class="demo-subtitle">Thanh toán</div>
+                <div id="paymentsList" class="demo-list"></div>
+              </div>
+              <div>
+                <div class="demo-subtitle">Tổng</div>
+                <div id="orderTotals" class="demo-kv"></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div>
+          <article class="detail-block">
+            <div class="detail-block-header">
+              <span class="detail-chip">Mapping</span>
+              <h3>Mapping theo cặp định khoản (mock)</h3>
+            </div>
+            <div id="mappingSummary" class="demo-kv"></div>
+            <div class="demo-table-wrap">
+              <table class="demo-table" id="mappingTable">
+                <thead>
+                  <tr>
+                    <th>Nghiệp vụ</th>
+                    <th>Nợ</th>
+                    <th>Có</th>
+                    <th>Ghi chú</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="detail-note">Mapping ưu tiên: item + kho + chi nhánh → nhóm + kho → nhóm → kho → chi nhánh → mặc định.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Kết quả phát sinh</h2>
+        <p class="detail-note">Đây là output mà hệ thống kế toán dùng để lên sổ và báo cáo.</p>
+      </div>
+
+      <div class="detail-grid">
+        <div>
+          <article class="detail-block">
+            <div class="detail-block-header">
+              <span class="detail-chip">Chứng từ</span>
+              <h3>Danh sách chứng từ phát sinh</h3>
+            </div>
+            <div id="documentsList" class="demo-docs"></div>
+          </article>
+        </div>
+
+        <div>
+          <article class="detail-block">
+            <div class="detail-block-header">
+              <span class="detail-chip">Bút toán</span>
+              <h3>Journal lines (tổng hợp)</h3>
+            </div>
+            <div class="demo-table-wrap">
+              <table class="demo-table" id="journalTable">
+                <thead>
+                  <tr>
+                    <th>Nợ/Có</th>
+                    <th>Tài khoản</th>
+                    <th>Số tiền</th>
+                    <th>Diễn giải</th>
+                    <th>Dimension</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <article class="detail-block">
+        <div class="detail-block-header">
+          <span class="detail-chip">Báo cáo</span>
+          <h3>Tóm tắt báo cáo tự lên</h3>
+        </div>
+        <div id="reportCards" class="demo-report-grid"></div>
+      </article>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Sổ sách & báo cáo</h2>
+        <p class="detail-note">Tất cả bảng dưới đây đều sinh từ JournalLines (đã Posted). Nếu bật kết chuyển, hệ thống sẽ thêm bút toán 511/632 → 911 → 421.</p>
+      </div>
+
+      <article class="detail-block">
+        <div class="detail-block-header">
+          <span class="detail-chip">Nhật ký chung</span>
+          <h3>Sổ nhật ký chung (General Journal)</h3>
+        </div>
+        <div class="demo-table-wrap">
+          <table class="demo-table" id="generalJournalTable">
+            <thead>
+              <tr>
+                <th>Ngày</th>
+                <th>Chứng từ</th>
+                <th>Diễn giải</th>
+                <th>TK Nợ</th>
+                <th>TK Có</th>
+                <th>Số tiền</th>
+                <th>Dimension</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="detail-block">
+        <div class="detail-block-header">
+          <span class="detail-chip">Sổ chi tiết</span>
+          <h3>Sổ chi tiết tài khoản (Account Detail)</h3>
+        </div>
+        <div class="demo-toolbar demo-toolbar-tight">
+          <label class="demo-field">
+            <span class="demo-label">Chọn tài khoản</span>
+            <select id="ledgerAccountSelect" class="demo-select"></select>
+          </label>
+        </div>
+        <div class="demo-table-wrap">
+          <table class="demo-table" id="ledgerTable">
+            <thead>
+              <tr>
+                <th>Ngày</th>
+                <th>Chứng từ</th>
+                <th>Diễn giải</th>
+                <th>Nợ</th>
+                <th>Có</th>
+                <th>Số dư</th>
+                <th>Dimension</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+
+      <div class="detail-grid demo-two-col">
+        <div>
+          <article class="detail-block">
+            <div class="detail-block-header">
+              <span class="detail-chip">Công nợ</span>
+              <h3>Phải thu (131) theo khách hàng</h3>
+            </div>
+            <div class="demo-table-wrap">
+              <table class="demo-table" id="arTable">
+                <thead>
+                  <tr>
+                    <th>Khách hàng</th>
+                    <th>Phát sinh Nợ</th>
+                    <th>Phát sinh Có</th>
+                    <th>Dư cuối</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+        <div>
+          <article class="detail-block">
+            <div class="detail-block-header">
+              <span class="detail-chip">Công nợ</span>
+              <h3>Phải trả (331) theo nhà cung cấp</h3>
+            </div>
+            <div class="demo-table-wrap">
+              <table class="demo-table" id="apTable">
+                <thead>
+                  <tr>
+                    <th>Nhà cung cấp</th>
+                    <th>Phát sinh Nợ</th>
+                    <th>Phát sinh Có</th>
+                    <th>Dư cuối</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <article class="detail-block">
+        <div class="detail-block-header">
+          <span class="detail-chip">Bảng cân đối</span>
+          <h3>Bảng cân đối phát sinh (Trial Balance)</h3>
+        </div>
+        <div class="demo-table-wrap">
+          <table class="demo-table" id="trialBalanceTable">
+            <thead>
+              <tr>
+                <th>Tài khoản</th>
+                <th>Phát sinh Nợ</th>
+                <th>Phát sinh Có</th>
+                <th>Dư Nợ</th>
+                <th>Dư Có</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="detail-block">
+        <div class="detail-block-header">
+          <span class="detail-chip">Bảng cân đối</span>
+          <h3>Bảng cân đối kế toán (rút gọn)</h3>
+        </div>
+        <div id="balanceSheetCards" class="demo-report-grid"></div>
+      </article>
+    </section>
+  </main>
+
+  <div class="slideover-overlay" id="slideoverOverlay"></div>
+  <aside class="slideover" id="slideover">
+    <header class="slideover-header">
+      <div>
+        <h3 class="slideover-title" id="slideoverTitle">Chi tiết</h3>
+        <p class="slideover-subtitle" id="slideoverSubtitle"></p>
+      </div>
+      <button class="slideover-close" id="slideoverClose" type="button" aria-label="Đóng">✕</button>
+    </header>
+    <div class="slideover-body" id="slideoverBody"></div>
+  </aside>
+
+  <script>
+    const formatMoney = (value) => {
+      const n = Number(value || 0);
+      return n.toLocaleString('vi-VN');
+    };
+
+    const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+
+    const groupSum = (items, keyFn, amountFn) => {
+      const map = new Map();
+      for (const item of items) {
+        const key = keyFn(item);
+        const prev = map.get(key) || 0;
+        map.set(key, prev + amountFn(item));
+      }
+      return map;
+    };
+
+    const scenarios = [
+      {
+        id: 'sale-multi-lines-paid-mixed',
+        name: 'Bán thu ngay - nhiều mặt hàng, nhiều VAT, nhiều phương thức',
+        kind: 'SALE',
+        order: {
+          orgId: 'GODI',
+          branchId: 'CN-HN',
+          orderNo: 'DH-000128',
+          orderDate: '2026-06-05 14:20',
+          customerRef: null,
+          supplierRef: null,
+          idempotencyKey: 'GODI|SALE|DH-000128',
+          lines: [
+            { lineNo: 1, itemId: 'HH-A', name: 'Nước suối 500ml', lineType: 'HÀNG_HÓA', itemGroupId: 'HH-DOUONG', warehouseId: 'KHO-1', qty: 10, unitPriceExVat: 10000, taxRate: 0.1, unitCost: 6000 },
+            { lineNo: 2, itemId: 'HH-B', name: 'Bánh snack', lineType: 'HÀNG_HÓA', itemGroupId: 'HH-ANVAT', warehouseId: 'KHO-2', qty: 5, unitPriceExVat: 20000, taxRate: 0, unitCost: 12000 },
+            { lineNo: 3, itemId: 'DV-C', name: 'Phí đóng gói', lineType: 'DỊCH_VỤ', itemGroupId: 'DV-PHIVU', warehouseId: null, qty: 1, unitPriceExVat: 15000, taxRate: 0.1, unitCost: 0 }
+          ],
+          payments: [
+            { method: 'CASH', amount: 120000 },
+            { method: 'BANK_TRANSFER', amount: 115000 }
+          ]
+        }
+      },
+      {
+        id: 'sale-credit-multi-lines',
+        name: 'Bán chịu - nhiều mặt hàng, thu tiền sau',
+        kind: 'SALE',
+        order: {
+          orgId: 'GODI',
+          branchId: 'CN-HN',
+          orderNo: 'DH-000129',
+          orderDate: '2026-06-05 15:05',
+          customerRef: 'KH-0009',
+          supplierRef: null,
+          idempotencyKey: 'GODI|SALE|DH-000129',
+          lines: [
+            { lineNo: 1, itemId: 'HH-D', name: 'Combo quà tặng', lineType: 'HÀNG_HÓA', itemGroupId: 'HH-QUATANG', warehouseId: 'KHO-1', qty: 1, unitPriceExVat: 500000, taxRate: 0.1, unitCost: 320000 },
+            { lineNo: 2, itemId: 'DV-E', name: 'Dịch vụ giao hàng', lineType: 'DỊCH_VỤ', itemGroupId: 'DV-VANCHUYEN', warehouseId: null, qty: 1, unitPriceExVat: 30000, taxRate: 0.1, unitCost: 0 }
+          ],
+          payments: []
+        }
+      },
+      {
+        id: 'purchase-vat-unpaid',
+        name: 'Mua hàng nhập kho - có VAT, chưa thanh toán',
+        kind: 'PURCHASE',
+        order: {
+          orgId: 'GODI',
+          branchId: 'CN-HN',
+          orderNo: 'MH-000045',
+          orderDate: '2026-06-06 10:00',
+          customerRef: null,
+          supplierRef: 'NCC-001',
+          idempotencyKey: 'GODI|PURCHASE|MH-000045',
+          lines: [
+            { lineNo: 1, itemId: 'HH-NL', name: 'Nguyên liệu A', lineType: 'HÀNG_HÓA', itemGroupId: 'HH-NVL', warehouseId: 'KHO-1', qty: 50, unitPriceExVat: 20000, taxRate: 0.1, unitCost: 20000 },
+            { lineNo: 2, itemId: 'HH-DC', name: 'Dụng cụ B', lineType: 'HÀNG_HÓA', itemGroupId: 'HH-DC', warehouseId: 'KHO-2', qty: 10, unitPriceExVat: 50000, taxRate: 0.1, unitCost: 50000 }
+          ],
+          payments: []
+        }
+      }
+    ];
+
+    const baseMapping = {
+      accounts: {
+        cash: '111',
+        bank: '112',
+        clearing: '113',
+        ar: '131',
+        ap: '331',
+        vatOut: '3331',
+        vatIn: '1331',
+        cogs: '632',
+        pnl: '911',
+        retainedEarnings: '421'
+      },
+      revenueByItemGroup: {
+        'HH-DOUONG': '5111',
+        'HH-ANVAT': '5111',
+        'HH-QUATANG': '5111',
+        'HH-NVL': '5111',
+        'HH-DC': '5111',
+        'DV-PHIVU': '5113',
+        'DV-VANCHUYEN': '5113'
+      },
+      inventoryByWarehouse: {
+        'KHO-1': '1561',
+        'KHO-2': '1562'
+      },
+      defaultRevenue: '5111',
+      defaultInventory: '156'
+    };
+
+    const resolveBankAccount = (bankMode) => bankMode === '113' ? baseMapping.accounts.clearing : baseMapping.accounts.bank;
+
+    const resolveRevenueAccount = (line) => baseMapping.revenueByItemGroup[line.itemGroupId] || baseMapping.defaultRevenue;
+    const resolveInventoryAccount = (line) => {
+      if (!line.warehouseId) return null;
+      return baseMapping.inventoryByWarehouse[line.warehouseId] || baseMapping.defaultInventory;
+    };
+
+    const calcLine = (line) => {
+      const qty = Number(line.qty || 0);
+      const unitEx = Number(line.unitPriceExVat || 0);
+      const taxRate = Number(line.taxRate || 0);
+      const net = qty * unitEx;
+      const vat = Math.round(net * taxRate);
+      const gross = net + vat;
+      const cost = Number(line.unitCost || 0) * qty;
+      return { net, vat, gross, cost };
+    };
+
+    const buildAccountingResult = (scenarioId, cogsMode, bankMode, closingEnabled, closingPeriod) => {
+      const scenario = scenarios.find((s) => s.id === scenarioId) || scenarios[0];
+      const kind = scenario.kind || 'SALE';
+      const order = deepClone(scenario.order);
+
+      const bankAccount = resolveBankAccount(bankMode);
+      const payments = order.payments.map((p) => ({
+        ...p,
+        account: p.method === 'CASH' ? baseMapping.accounts.cash : bankAccount
+      }));
+
+      const lines = order.lines.map((l) => ({
+        ...l,
+        ...calcLine(l),
+        revenueAccount: resolveRevenueAccount(l),
+        inventoryAccount: resolveInventoryAccount(l)
+      }));
+
+      const totalGross = lines.reduce((s, l) => s + l.gross, 0);
+      const totalNet = lines.reduce((s, l) => s + l.net, 0);
+      const totalVat = lines.reduce((s, l) => s + l.vat, 0);
+      const totalCost = lines.reduce((s, l) => s + (l.lineType === 'HÀNG_HÓA' ? l.cost : 0), 0);
+      const paid = payments.reduce((s, p) => s + Number(p.amount || 0), 0);
+
+      const dimensionsBase = { orgId: order.orgId, branchId: order.branchId, sourceRefNo: order.orderNo };
+      const journalLines = [];
+      const docPrefix = order.orderNo.replace('DH', 'CT').replace('MH', 'CT');
+
+      if (kind === 'SALE') {
+        const isCreditSale = Boolean(order.customerRef) && paid === 0;
+
+        if (isCreditSale) {
+          journalLines.push({
+            postDate: order.orderDate,
+            docNo: `${docPrefix}-BH`,
+            side: 'Nợ',
+            account: baseMapping.accounts.ar,
+            amount: totalGross,
+            memo: 'Ghi nhận công nợ khách hàng',
+            dims: { ...dimensionsBase, customerRef: order.customerRef }
+          });
+        } else {
+          const byPaymentAccount = groupSum(payments, (p) => p.account, (p) => Number(p.amount || 0));
+          for (const [account, amount] of byPaymentAccount.entries()) {
+            journalLines.push({
+              postDate: order.orderDate,
+              docNo: `${docPrefix}-PT`,
+              side: 'Nợ',
+              account,
+              amount,
+              memo: 'Thu tiền bán hàng',
+              dims: { ...dimensionsBase }
+            });
+          }
+        }
+
+        const revenueGroups = groupSum(lines, (l) => `${l.revenueAccount}|${l.taxRate}`, (l) => l.net);
+        for (const [key, amount] of revenueGroups.entries()) {
+          const [account, taxRateStr] = key.split('|');
+          const taxRate = Number(taxRateStr || 0);
+          journalLines.push({
+            postDate: order.orderDate,
+            docNo: `${docPrefix}-BH`,
+            side: 'Có',
+            account,
+            amount,
+            memo: `Doanh thu (${(taxRate * 100).toFixed(0)}% VAT)`,
+            dims: { ...dimensionsBase, taxRate }
+          });
+        }
+
+        const vatByRate = groupSum(lines.filter((l) => l.vat > 0), (l) => String(l.taxRate), (l) => l.vat);
+        for (const [taxRateStr, amount] of vatByRate.entries()) {
+          const taxRate = Number(taxRateStr || 0);
+          journalLines.push({
+            postDate: order.orderDate,
+            docNo: `${docPrefix}-BH`,
+            side: 'Có',
+            account: baseMapping.accounts.vatOut,
+            amount,
+            memo: `Thuế GTGT đầu ra (${(taxRate * 100).toFixed(0)}%)`,
+            dims: { ...dimensionsBase, taxRate }
+          });
+        }
+
+        const stockLines = lines.filter((l) => l.lineType === 'HÀNG_HÓA');
+        if (stockLines.length) {
+          journalLines.push({
+            postDate: order.orderDate,
+            docNo: `${docPrefix}-GV`,
+            side: 'Nợ',
+            account: baseMapping.accounts.cogs,
+            amount: totalCost,
+            memo: 'Giá vốn hàng bán',
+            dims: { ...dimensionsBase }
+          });
+
+          if (cogsMode === 'total') {
+            journalLines.push({
+              postDate: order.orderDate,
+              docNo: `${docPrefix}-XK`,
+              side: 'Có',
+              account: baseMapping.defaultInventory,
+              amount: totalCost,
+              memo: 'Giảm tồn kho (tổng)',
+              dims: { ...dimensionsBase }
+            });
+          } else {
+            const invByWarehouse = groupSum(stockLines, (l) => `${l.inventoryAccount}|${l.warehouseId}`, (l) => l.cost);
+            for (const [key, amount] of invByWarehouse.entries()) {
+              const [account, warehouseId] = key.split('|');
+              journalLines.push({
+                postDate: order.orderDate,
+                docNo: `${docPrefix}-XK`,
+                side: 'Có',
+                account,
+                amount,
+                memo: 'Giảm tồn kho',
+                dims: { ...dimensionsBase, warehouseId }
+              });
+            }
+          }
+        }
+      } else {
+        const stockLines = lines.filter((l) => l.lineType === 'HÀNG_HÓA');
+        if (stockLines.length) {
+          const invByWarehouse = groupSum(stockLines, (l) => `${l.inventoryAccount}|${l.warehouseId}`, (l) => l.net);
+          for (const [key, amount] of invByWarehouse.entries()) {
+            const [account, warehouseId] = key.split('|');
+            journalLines.push({
+              postDate: order.orderDate,
+              docNo: `${docPrefix}-NK`,
+              side: 'Nợ',
+              account,
+              amount,
+              memo: 'Nhập kho mua hàng',
+              dims: { ...dimensionsBase, warehouseId }
+            });
+          }
+        }
+
+        if (totalVat > 0) {
+          journalLines.push({
+            postDate: order.orderDate,
+            docNo: `${docPrefix}-MH`,
+            side: 'Nợ',
+            account: baseMapping.accounts.vatIn,
+            amount: totalVat,
+            memo: 'Thuế GTGT đầu vào',
+            dims: { ...dimensionsBase }
+          });
+        }
+
+        journalLines.push({
+          postDate: order.orderDate,
+          docNo: `${docPrefix}-MH`,
+          side: 'Có',
+          account: baseMapping.accounts.ap,
+          amount: totalGross,
+          memo: 'Ghi nhận công nợ nhà cung cấp',
+          dims: { ...dimensionsBase, supplierRef: order.supplierRef || '(chưa có)' }
+        });
+
+        if (paid > 0) {
+          journalLines.push({
+            postDate: order.orderDate,
+            docNo: `${docPrefix}-PC`,
+            side: 'Nợ',
+            account: baseMapping.accounts.ap,
+            amount: paid,
+            memo: 'Thanh toán nhà cung cấp',
+            dims: { ...dimensionsBase, supplierRef: order.supplierRef || '(chưa có)' }
+          });
+
+          const byPaymentAccount = groupSum(payments, (p) => p.account, (p) => Number(p.amount || 0));
+          for (const [account, amount] of byPaymentAccount.entries()) {
+            journalLines.push({
+              postDate: order.orderDate,
+              docNo: `${docPrefix}-PC`,
+              side: 'Có',
+              account,
+              amount,
+              memo: 'Chi tiền thanh toán',
+              dims: { ...dimensionsBase }
+            });
+          }
+        }
+      }
+
+      const debitTotal = journalLines.filter((l) => l.side === 'Nợ').reduce((s, l) => s + l.amount, 0);
+      const creditTotal = journalLines.filter((l) => l.side === 'Có').reduce((s, l) => s + l.amount, 0);
+      const isBalanced = debitTotal === creditTotal;
+
+      const closingLines = [];
+      const closingDocNo = `KC-${closingPeriod || '2026-06'}`;
+      const closingDate = `${closingPeriod || '2026-06'}-30`;
+
+      if (closingEnabled) {
+        const revenueByAccount = new Map();
+        const cogsByAccount = new Map();
+
+        for (const line of journalLines) {
+          if (line.account.startsWith('511') && line.side === 'Có') {
+            revenueByAccount.set(line.account, (revenueByAccount.get(line.account) || 0) + line.amount);
+          }
+          if (line.account.startsWith('632') && line.side === 'Nợ') {
+            cogsByAccount.set(line.account, (cogsByAccount.get(line.account) || 0) + line.amount);
+          }
+        }
+
+        const totalRevenue = Array.from(revenueByAccount.values()).reduce((s, v) => s + v, 0);
+        const totalCogs = Array.from(cogsByAccount.values()).reduce((s, v) => s + v, 0);
+
+        if (totalRevenue > 0) {
+          for (const [account, amount] of revenueByAccount.entries()) {
+            closingLines.push({
+              postDate: closingDate,
+              docNo: closingDocNo,
+              side: 'Nợ',
+              account,
+              amount,
+              memo: 'Kết chuyển doanh thu',
+              dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+            });
+          }
+          closingLines.push({
+            postDate: closingDate,
+            docNo: closingDocNo,
+            side: 'Có',
+            account: baseMapping.accounts.pnl,
+            amount: totalRevenue,
+            memo: 'Kết chuyển doanh thu',
+            dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+          });
+        }
+
+        if (totalCogs > 0) {
+          closingLines.push({
+            postDate: closingDate,
+            docNo: closingDocNo,
+            side: 'Nợ',
+            account: baseMapping.accounts.pnl,
+            amount: totalCogs,
+            memo: 'Kết chuyển giá vốn',
+            dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+          });
+          for (const [account, amount] of cogsByAccount.entries()) {
+            closingLines.push({
+              postDate: closingDate,
+              docNo: closingDocNo,
+              side: 'Có',
+              account,
+              amount,
+              memo: 'Kết chuyển giá vốn',
+              dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+            });
+          }
+        }
+
+        const profit = totalRevenue - totalCogs;
+        if (profit !== 0) {
+          if (profit > 0) {
+            closingLines.push({
+              postDate: closingDate,
+              docNo: closingDocNo,
+              side: 'Nợ',
+              account: baseMapping.accounts.pnl,
+              amount: profit,
+              memo: 'Kết chuyển kết quả kinh doanh',
+              dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+            });
+            closingLines.push({
+              postDate: closingDate,
+              docNo: closingDocNo,
+              side: 'Có',
+              account: baseMapping.accounts.retainedEarnings,
+              amount: profit,
+              memo: 'Kết chuyển kết quả kinh doanh',
+              dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+            });
+          } else {
+            closingLines.push({
+              postDate: closingDate,
+              docNo: closingDocNo,
+              side: 'Nợ',
+              account: baseMapping.accounts.retainedEarnings,
+              amount: Math.abs(profit),
+              memo: 'Kết chuyển kết quả kinh doanh',
+              dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+            });
+            closingLines.push({
+              postDate: closingDate,
+              docNo: closingDocNo,
+              side: 'Có',
+              account: baseMapping.accounts.pnl,
+              amount: Math.abs(profit),
+              memo: 'Kết chuyển kết quả kinh doanh',
+              dims: { ...dimensionsBase, closingPeriod: closingPeriod || '2026-06' }
+            });
+          }
+        }
+      }
+
+      const journalLinesEffective = [...journalLines, ...closingLines];
+      const debitTotalEffective = journalLinesEffective.filter((l) => l.side === 'Nợ').reduce((s, l) => s + l.amount, 0);
+      const creditTotalEffective = journalLinesEffective.filter((l) => l.side === 'Có').reduce((s, l) => s + l.amount, 0);
+      const isBalancedEffective = debitTotalEffective === creditTotalEffective;
+
+      const documents = [];
+      if (kind === 'SALE') {
+        documents.push({
+          id: `${docPrefix}-BH`,
+          type: 'Chứng từ bán hàng',
+          status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+          payload: { order, mode: Boolean(order.customerRef) && paid === 0 ? 'Công nợ' : 'Thu ngay' }
+        });
+        if (!(Boolean(order.customerRef) && paid === 0) && payments.length) {
+          documents.push({
+            id: `${docPrefix}-PT`,
+            type: 'Phiếu thu',
+            status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+            payload: { payments, refNo: order.orderNo }
+          });
+        }
+        const stockLines = lines.filter((l) => l.lineType === 'HÀNG_HÓA');
+        if (stockLines.length) {
+          documents.push({
+            id: `${docPrefix}-XK`,
+            type: 'Phiếu xuất kho',
+            status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+            payload: { stockLines: stockLines.map((l) => ({ itemId: l.itemId, name: l.name, qty: l.qty, warehouseId: l.warehouseId })) }
+          });
+          documents.push({
+            id: `${docPrefix}-GV`,
+            type: 'Bút toán giá vốn',
+            status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+            payload: { totalCost, cogsMode }
+          });
+        }
+      } else {
+        documents.push({
+          id: `${docPrefix}-MH`,
+          type: 'Chứng từ mua hàng',
+          status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+          payload: { order, supplierRef: order.supplierRef }
+        });
+        documents.push({
+          id: `${docPrefix}-NK`,
+          type: 'Phiếu nhập kho',
+          status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+          payload: { lines: lines.map((l) => ({ itemId: l.itemId, name: l.name, qty: l.qty, warehouseId: l.warehouseId })) }
+        });
+        if (paid > 0) {
+          documents.push({
+            id: `${docPrefix}-PC`,
+            type: 'Phiếu chi',
+            status: isBalanced ? 'Đã ghi sổ' : 'Chờ xử lý',
+            payload: { payments, supplierRef: order.supplierRef }
+          });
+        }
+      }
+
+      if (closingEnabled && closingLines.length) {
+        documents.push({
+          id: closingDocNo,
+          type: 'Kết chuyển cuối kỳ',
+          status: isBalancedEffective ? 'Đã ghi sổ' : 'Chờ xử lý',
+          payload: { closingPeriod: closingPeriod || '2026-06', note: 'Kết chuyển 511/632 → 911 → 421' }
+        });
+      }
+
+      const report = {
+        totals: { net: totalNet, vat: totalVat, gross: totalGross, cogs: kind === 'SALE' ? totalCost : 0, grossProfit: kind === 'SALE' ? totalNet - totalCost : 0 },
+        balances: {
+          cash: journalLinesEffective.filter((l) => l.account === baseMapping.accounts.cash).reduce((s, l) => s + (l.side === 'Nợ' ? l.amount : -l.amount), 0),
+          bank: journalLinesEffective.filter((l) => l.account === bankAccount).reduce((s, l) => s + (l.side === 'Nợ' ? l.amount : -l.amount), 0),
+          ar: journalLinesEffective.filter((l) => l.account === baseMapping.accounts.ar).reduce((s, l) => s + (l.side === 'Nợ' ? l.amount : -l.amount), 0),
+          ap: journalLinesEffective.filter((l) => l.account === baseMapping.accounts.ap).reduce((s, l) => s + (l.side === 'Có' ? l.amount : -l.amount), 0)
+        },
+        vatOut: journalLinesEffective.filter((l) => l.account === baseMapping.accounts.vatOut).reduce((s, l) => s + (l.side === 'Có' ? l.amount : -l.amount), 0),
+        vatIn: journalLinesEffective.filter((l) => l.account === baseMapping.accounts.vatIn).reduce((s, l) => s + (l.side === 'Nợ' ? l.amount : -l.amount), 0),
+        pnl: journalLinesEffective.filter((l) => l.account === baseMapping.accounts.retainedEarnings).reduce((s, l) => s + (l.side === 'Có' ? l.amount : -l.amount), 0)
+      };
+
+      return {
+        scenario,
+        kind,
+        order,
+        payments,
+        lines,
+        journalLines,
+        closingLines,
+        journalLinesEffective,
+        documents,
+        report,
+        check: { debitTotal, creditTotal, isBalanced, debitTotalEffective, creditTotalEffective, isBalancedEffective }
+      };
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    const overlayEl = $('#slideoverOverlay');
+    const slideoverEl = $('#slideover');
+    const slideoverTitleEl = $('#slideoverTitle');
+    const slideoverSubtitleEl = $('#slideoverSubtitle');
+    const slideoverBodyEl = $('#slideoverBody');
+    const slideoverCloseEl = $('#slideoverClose');
+
+    const openSlideover = (title, subtitle, bodyHtml) => {
+      slideoverTitleEl.textContent = title;
+      slideoverSubtitleEl.textContent = subtitle || '';
+      slideoverBodyEl.innerHTML = bodyHtml || '';
+      document.body.classList.add('slideover-open');
+      overlayEl.classList.add('open');
+      slideoverEl.classList.add('open');
+    };
+
+    const closeSlideover = () => {
+      document.body.classList.remove('slideover-open');
+      overlayEl.classList.remove('open');
+      slideoverEl.classList.remove('open');
+      slideoverBodyEl.innerHTML = '';
+    };
+
+    overlayEl.addEventListener('click', closeSlideover);
+    slideoverCloseEl.addEventListener('click', closeSlideover);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSlideover();
+    });
+
+    const renderKv = (entries) => {
+      return `
+        <div class="demo-kv-grid">
+          ${entries.map(([k, v]) => `<div class="demo-kv-item"><span class="demo-kv-k">${k}</span><span class="demo-kv-v">${v}</span></div>`).join('')}
+        </div>
+      `;
+    };
+
+    const render = () => {
+      const scenarioId = $('#scenarioSelect').value;
+      const cogsMode = $('#cogsModeSelect').value;
+      const bankMode = $('#bankModeSelect').value;
+      const closingEnabled = $('#closingToggle').checked;
+      const closingPeriod = $('#closingPeriodSelect').value;
+      const result = buildAccountingResult(scenarioId, cogsMode, bankMode, closingEnabled, closingPeriod);
+
+      const refLabel = result.kind === 'PURCHASE' ? 'Mã giao dịch mua' : 'Mã đơn';
+      const partnerLabel = result.kind === 'PURCHASE' ? 'Nhà cung cấp' : 'Khách hàng';
+      const partnerValue = result.kind === 'PURCHASE'
+        ? (result.order.supplierRef ? result.order.supplierRef : '(chưa có)')
+        : (result.order.customerRef ? result.order.customerRef : 'Khách lẻ');
+
+      $('#orderSummary').innerHTML = renderKv([
+        [refLabel, result.order.orderNo],
+        ['Thời gian', result.order.orderDate],
+        ['Chi nhánh', result.order.branchId],
+        [partnerLabel, partnerValue],
+        ['Idempotency', result.order.idempotencyKey]
+      ]);
+
+      const orderLinesBody = $('#orderLinesTable tbody');
+      orderLinesBody.innerHTML = result.lines.map((l) => {
+        return `
+          <tr>
+            <td><strong>${l.name}</strong><div class="demo-muted">${l.itemId}</div></td>
+            <td>${l.lineType}</td>
+            <td>${l.itemGroupId}</td>
+            <td>${l.warehouseId ? l.warehouseId : '-'}</td>
+            <td>${l.qty}</td>
+            <td>${formatMoney(l.unitPriceExVat)}</td>
+            <td>${(l.taxRate * 100).toFixed(0)}%</td>
+            <td>${formatMoney(l.gross)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      const paymentsList = $('#paymentsList');
+      if (!result.payments.length) {
+        paymentsList.innerHTML = result.kind === 'PURCHASE'
+          ? '<div class="demo-empty">Chưa thanh toán (công nợ nhà cung cấp)</div>'
+          : '<div class="demo-empty">Chưa thu tiền (bán chịu)</div>';
+      } else {
+        paymentsList.innerHTML = result.payments.map((p) => {
+          const label = p.method === 'CASH' ? 'Tiền mặt' : (p.method === 'BANK_TRANSFER' ? 'Chuyển khoản' : p.method);
+          return `<div class="demo-list-item"><span>${label}</span><span class="demo-strong">${formatMoney(p.amount)}</span></div>`;
+        }).join('');
+      }
+
+      $('#orderTotals').innerHTML = result.kind === 'PURCHASE'
+        ? renderKv([
+          ['Giá trị mua (chưa VAT)', formatMoney(result.report.totals.net)],
+          ['VAT đầu vào', formatMoney(result.report.totals.vat)],
+          ['Tổng phải trả', formatMoney(result.report.totals.gross)],
+          ['Công nợ phải trả (331)', formatMoney(result.report.balances.ap)],
+          ['Tiền/Ngân hàng', formatMoney(result.report.balances.cash + result.report.balances.bank)]
+        ])
+        : renderKv([
+          ['Tổng chưa VAT', formatMoney(result.report.totals.net)],
+          ['VAT', formatMoney(result.report.totals.vat)],
+          ['Tổng thanh toán', formatMoney(result.report.totals.gross)],
+          ['Giá vốn (ước tính)', formatMoney(result.report.totals.cogs)],
+          ['Lãi gộp', formatMoney(result.report.totals.grossProfit)]
+        ]);
+
+      const bankAccount = resolveBankAccount(bankMode);
+      const mappingSummaryEntries = [
+        ['111', 'Tiền mặt'],
+        [bankAccount, bankMode === '113' ? 'Chờ đối soát' : 'Ngân hàng'],
+        ['131', 'Phải thu'],
+        ['331', 'Phải trả'],
+        ['156/152', 'Tồn kho'],
+        ['511.*', 'Doanh thu'],
+        ['3331', 'VAT đầu ra'],
+        ['1331', 'VAT đầu vào'],
+        ['632', 'Giá vốn']
+      ];
+      if (closingEnabled) {
+        mappingSummaryEntries.push(['911', 'Xác định KQKD']);
+        mappingSummaryEntries.push(['421', 'Lợi nhuận sau thuế']);
+      }
+      $('#mappingSummary').innerHTML = renderKv(mappingSummaryEntries);
+
+      const unique = (items) => Array.from(new Set(items.filter(Boolean)));
+      const joinAccounts = (accounts) => unique(accounts).map((a) => `<span class="demo-badge">${a}</span>`).join(' ');
+
+      const revenueAccounts = unique(result.lines.map((l) => l.revenueAccount));
+      const inventoryAccounts = unique(result.lines.filter((l) => l.lineType === 'HÀNG_HÓA').map((l) => l.inventoryAccount));
+      const paymentAccounts = unique(result.payments.map((p) => p.account));
+      const hasVatOut = result.kind === 'SALE' && result.report.totals.vat > 0;
+      const hasVatIn = result.kind === 'PURCHASE' && result.report.totals.vat > 0;
+
+      const mappingPairs = [];
+      if (result.kind === 'SALE') {
+        const saleDebitAccounts = result.order.customerRef && !result.payments.length ? [baseMapping.accounts.ar] : paymentAccounts;
+        mappingPairs.push({
+          name: result.order.customerRef && !result.payments.length ? 'Bán chịu (ghi nhận công nợ)' : 'Bán thu ngay (thu tiền)',
+          debit: saleDebitAccounts.length ? saleDebitAccounts : ['(chưa có)'],
+          credit: [...revenueAccounts, ...(hasVatOut ? [baseMapping.accounts.vatOut] : [])],
+          note: 'Ghi nhận doanh thu và thuế đầu ra theo nhóm hàng/dịch vụ và thuế suất'
+        });
+
+        if (inventoryAccounts.length) {
+          mappingPairs.push({
+            name: 'Giá vốn & giảm tồn kho',
+            debit: [baseMapping.accounts.cogs],
+            credit: cogsMode === 'total' ? [baseMapping.defaultInventory] : inventoryAccounts,
+            note: cogsMode === 'total' ? 'Gom tổng giảm tồn' : 'Tách theo kho (khuyến nghị)'
+          });
+        }
+
+        if (result.order.customerRef) {
+          mappingPairs.push({
+            name: 'Thu tiền sau (PaymentSuccess)',
+            debit: [baseMapping.accounts.cash, bankAccount],
+            credit: [baseMapping.accounts.ar],
+            note: 'Chỉ phát sinh khi khách thanh toán sau (không nằm trong chứng từ bán chịu lúc bán)'
+          });
+        }
+
+        if (closingEnabled && result.closingLines.length) {
+          mappingPairs.push({
+            name: 'Kết chuyển doanh thu',
+            debit: revenueAccounts,
+            credit: [baseMapping.accounts.pnl],
+            note: 'Nợ 511.* / Có 911'
+          });
+          if (inventoryAccounts.length) {
+            mappingPairs.push({
+              name: 'Kết chuyển giá vốn',
+              debit: [baseMapping.accounts.pnl],
+              credit: [baseMapping.accounts.cogs],
+              note: 'Nợ 911 / Có 632'
+            });
+          }
+          mappingPairs.push({
+            name: 'Kết chuyển kết quả',
+            debit: [baseMapping.accounts.pnl],
+            credit: [baseMapping.accounts.retainedEarnings],
+            note: 'Nợ 911 / Có 421 (nếu lãi)'
+          });
+        }
+      } else {
+        mappingPairs.push({
+          name: 'Mua hàng (ghi nhận công nợ)',
+          debit: [...inventoryAccounts, ...(hasVatIn ? [baseMapping.accounts.vatIn] : [])],
+          credit: [baseMapping.accounts.ap],
+          note: 'Nợ 156/152 + Nợ 1331 / Có 331'
+        });
+        mappingPairs.push({
+          name: 'Thanh toán nhà cung cấp',
+          debit: [baseMapping.accounts.ap],
+          credit: [baseMapping.accounts.cash, bankAccount],
+          note: 'Nợ 331 / Có 111/112/113 (khi chi tiền)'
+        });
+      }
+
+      const mappingBody = $('#mappingTable tbody');
+      mappingBody.innerHTML = mappingPairs.map((r) => `
+        <tr>
+          <td><strong>${r.name}</strong></td>
+          <td>${joinAccounts(r.debit)}</td>
+          <td>${joinAccounts(r.credit)}</td>
+          <td class="demo-muted">${r.note}</td>
+        </tr>
+      `).join('');
+
+      const documentsList = $('#documentsList');
+      documentsList.innerHTML = result.documents.map((d) => {
+        const statusClass = d.status === 'Đã ghi sổ' ? 'ok' : 'warn';
+        return `
+          <button class="demo-doc" type="button" data-doc-id="${d.id}">
+            <div>
+              <div class="demo-doc-title">${d.type}</div>
+              <div class="demo-doc-sub">${d.id}</div>
+            </div>
+            <span class="demo-status ${statusClass}">${d.status}</span>
+          </button>
+        `;
+      }).join('');
+
+      $$('#documentsList .demo-doc').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-doc-id');
+          const doc = result.documents.find((d) => d.id === id);
+          openSlideover(
+            doc.type,
+            `${doc.id} • ${doc.status}`,
+            `<pre class="rule-code">${JSON.stringify(doc.payload, null, 2)}</pre>`
+          );
+        });
+      });
+
+      const journalBody = $('#journalTable tbody');
+      journalBody.innerHTML = result.journalLinesEffective.map((l, idx) => {
+        const dims = Object.entries(l.dims || {}).map(([k, v]) => `${k}=${v}`).join(', ');
+        return `
+          <tr>
+            <td><span class="demo-badge ${l.side === 'Nợ' ? 'debit' : 'credit'}">${l.side}</span></td>
+            <td><strong>${l.account}</strong></td>
+            <td>${formatMoney(l.amount)}</td>
+            <td class="demo-muted">${l.memo}</td>
+            <td class="demo-muted demo-dims">${dims}</td>
+          </tr>
+        `;
+      }).join('');
+
+      const summaryCards = result.kind === 'PURCHASE'
+        ? [
+          { title: 'Check cân bút toán', value: result.check.isBalancedEffective ? 'Cân Nợ/Có' : 'Lệch', note: `Nợ ${formatMoney(result.check.debitTotalEffective)} • Có ${formatMoney(result.check.creditTotalEffective)}` },
+          { title: 'Mua hàng (Nợ 156)', value: formatMoney(result.report.totals.net), note: 'Tổng chưa VAT' },
+          { title: 'VAT đầu vào (Nợ 1331)', value: formatMoney(result.report.vatIn), note: 'Theo thuế suất' },
+          { title: 'Công nợ phải trả (331)', value: formatMoney(result.report.balances.ap), note: partnerValue },
+          { title: 'Tiền mặt (111)', value: formatMoney(result.report.balances.cash), note: 'Dư cuối' },
+          { title: `${bankAccount} (${bankMode === '113' ? 'chờ đối soát' : 'ngân hàng'})`, value: formatMoney(result.report.balances.bank), note: 'Dư cuối' }
+        ]
+        : [
+          { title: 'Check cân bút toán', value: result.check.isBalancedEffective ? 'Cân Nợ/Có' : 'Lệch', note: `Nợ ${formatMoney(result.check.debitTotalEffective)} • Có ${formatMoney(result.check.creditTotalEffective)}` },
+          { title: 'Doanh thu (Có 511)', value: formatMoney(result.report.totals.net), note: 'Tổng chưa VAT' },
+          { title: 'VAT đầu ra (Có 3331)', value: formatMoney(result.report.vatOut), note: 'Theo thuế suất' },
+          { title: 'Giá vốn (Nợ 632)', value: formatMoney(result.report.totals.cogs), note: cogsMode === 'total' ? 'Gom tổng' : 'Tách theo kho' },
+          { title: 'Lãi gộp', value: formatMoney(result.report.totals.grossProfit), note: 'Doanh thu - Giá vốn' },
+          { title: 'Công nợ phải thu (131)', value: formatMoney(result.report.balances.ar), note: result.order.customerRef ? partnerValue : 'Khách lẻ' }
+        ];
+      if (closingEnabled) {
+        summaryCards.push({ title: 'Kết chuyển (421)', value: formatMoney(result.report.pnl), note: closingPeriod });
+      }
+
+      $('#reportCards').innerHTML = summaryCards.map((c) => `
+        <div class="demo-report-card">
+          <div class="demo-report-title">${c.title}</div>
+          <div class="demo-report-value">${c.value}</div>
+          <div class="demo-report-note">${c.note}</div>
+        </div>
+      `).join('');
+
+      const dimsToText = (dims) => Object.entries(dims || {}).map(([k, v]) => `${k}=${v}`).join(', ');
+      const sortByDoc = (a, b) => {
+        const da = String(a.postDate || '');
+        const db = String(b.postDate || '');
+        if (da !== db) return da.localeCompare(db);
+        const oa = String(a.docNo || '');
+        const ob = String(b.docNo || '');
+        if (oa !== ob) return oa.localeCompare(ob);
+        return String(a.account || '').localeCompare(String(b.account || ''));
+      };
+
+      const effectiveLines = [...result.journalLinesEffective].sort(sortByDoc);
+
+      const groupKeyOf = (line) => `${line.postDate || ''}||${line.docNo || ''}`;
+      const byDoc = new Map();
+      for (const line of effectiveLines) {
+        const key = groupKeyOf(line);
+        const list = byDoc.get(key) || [];
+        list.push(line);
+        byDoc.set(key, list);
+      }
+
+      const docKeys = Array.from(byDoc.keys()).sort((a, b) => a.localeCompare(b, 'vi'));
+      const journalPairs = [];
+      for (const key of docKeys) {
+        const groupLines = byDoc.get(key) || [];
+        const debits = groupLines.filter((l) => l.side === 'Nợ').map((l) => ({ ...l, remaining: l.amount }));
+        const credits = groupLines.filter((l) => l.side === 'Có').map((l) => ({ ...l, remaining: l.amount }));
+
+        let i = 0;
+        let j = 0;
+        while (i < debits.length && j < credits.length) {
+          const d = debits[i];
+          const c = credits[j];
+          const amount = Math.min(d.remaining, c.remaining);
+          const memo = d.memo && c.memo && d.memo !== c.memo ? `${d.memo} / ${c.memo}` : (d.memo || c.memo || '');
+          const dims = { ...(c.dims || {}), ...(d.dims || {}) };
+          journalPairs.push({
+            postDate: d.postDate || c.postDate,
+            docNo: d.docNo || c.docNo,
+            memo,
+            debitAccount: d.account,
+            creditAccount: c.account,
+            amount,
+            dims
+          });
+          d.remaining -= amount;
+          c.remaining -= amount;
+          if (d.remaining === 0) i += 1;
+          if (c.remaining === 0) j += 1;
+        }
+
+        for (; i < debits.length; i += 1) {
+          if (!debits[i].remaining) continue;
+          journalPairs.push({
+            postDate: debits[i].postDate,
+            docNo: debits[i].docNo,
+            memo: debits[i].memo || '',
+            debitAccount: debits[i].account,
+            creditAccount: '',
+            amount: debits[i].remaining,
+            dims: debits[i].dims || {}
+          });
+        }
+        for (; j < credits.length; j += 1) {
+          if (!credits[j].remaining) continue;
+          journalPairs.push({
+            postDate: credits[j].postDate,
+            docNo: credits[j].docNo,
+            memo: credits[j].memo || '',
+            debitAccount: '',
+            creditAccount: credits[j].account,
+            amount: credits[j].remaining,
+            dims: credits[j].dims || {}
+          });
+        }
+      }
+
+      $('#generalJournalTable tbody').innerHTML = journalPairs.map((p) => `
+        <tr>
+          <td>${p.postDate || ''}</td>
+          <td><strong>${p.docNo || ''}</strong></td>
+          <td class="demo-muted">${p.memo || ''}</td>
+          <td><strong>${p.debitAccount || ''}</strong></td>
+          <td><strong>${p.creditAccount || ''}</strong></td>
+          <td>${formatMoney(p.amount)}</td>
+          <td class="demo-muted demo-dims">${dimsToText(p.dims)}</td>
+        </tr>
+      `).join('');
+
+      const accountSet = Array.from(new Set(effectiveLines.map((l) => l.account))).sort((a, b) => a.localeCompare(b, 'vi'));
+      const ledgerSelect = $('#ledgerAccountSelect');
+      const prevAccount = ledgerSelect.value || '';
+      ledgerSelect.innerHTML = accountSet.map((a) => `<option value="${a}">${a}</option>`).join('');
+      ledgerSelect.value = accountSet.includes(prevAccount) ? prevAccount : (accountSet[0] || '');
+
+      const balanceText = (signed) => signed >= 0 ? `Nợ ${formatMoney(signed)}` : `Có ${formatMoney(Math.abs(signed))}`;
+      const isDebitSide = (accountNo) => accountNo.startsWith('1') || accountNo.startsWith('6');
+
+      const selectedAccount = ledgerSelect.value;
+      let running = 0;
+      const ledgerLines = effectiveLines.filter((l) => l.account === selectedAccount);
+      $('#ledgerTable tbody').innerHTML = ledgerLines.map((l) => {
+        const delta = l.side === 'Nợ' ? l.amount : -l.amount;
+        running += delta;
+        return `
+          <tr>
+            <td>${l.postDate || ''}</td>
+            <td><strong>${l.docNo || ''}</strong></td>
+            <td class="demo-muted">${l.memo || ''}</td>
+            <td>${l.side === 'Nợ' ? formatMoney(l.amount) : ''}</td>
+            <td>${l.side === 'Có' ? formatMoney(l.amount) : ''}</td>
+            <td><strong>${balanceText(running)}</strong></td>
+            <td class="demo-muted demo-dims">${dimsToText(l.dims)}</td>
+          </tr>
+        `;
+      }).join('');
+
+      const partnerBalances = (accountNo, partnerField) => {
+        const map = new Map();
+        for (const line of effectiveLines) {
+          if (line.account !== accountNo) continue;
+          const partner = (line.dims && line.dims[partnerField]) ? line.dims[partnerField] : '(không xác định)';
+          const cur = map.get(partner) || { debit: 0, credit: 0 };
+          if (line.side === 'Nợ') cur.debit += line.amount; else cur.credit += line.amount;
+          map.set(partner, cur);
+        }
+        return Array.from(map.entries()).map(([partner, v]) => ({
+          partner,
+          debit: v.debit,
+          credit: v.credit,
+          end: (isDebitSide(accountNo) ? (v.debit - v.credit) : (v.credit - v.debit))
+        })).sort((a, b) => a.partner.localeCompare(b.partner, 'vi'));
+      };
+
+      const arRows = partnerBalances(baseMapping.accounts.ar, 'customerRef');
+      $('#arTable tbody').innerHTML = arRows.length ? arRows.map((r) => `
+        <tr>
+          <td><strong>${r.partner}</strong></td>
+          <td>${formatMoney(r.debit)}</td>
+          <td>${formatMoney(r.credit)}</td>
+          <td><strong>${formatMoney(Math.max(r.end, 0))}</strong></td>
+        </tr>
+      `).join('') : `<tr><td class="demo-muted" colspan="4">Không có dữ liệu phải thu (131).</td></tr>`;
+
+      const apRows = partnerBalances(baseMapping.accounts.ap, 'supplierRef');
+      $('#apTable tbody').innerHTML = apRows.length ? apRows.map((r) => `
+        <tr>
+          <td><strong>${r.partner}</strong></td>
+          <td>${formatMoney(r.debit)}</td>
+          <td>${formatMoney(r.credit)}</td>
+          <td><strong>${formatMoney(Math.max(r.end, 0))}</strong></td>
+        </tr>
+      `).join('') : `<tr><td class="demo-muted" colspan="4">Không có dữ liệu phải trả (331).</td></tr>`;
+
+      const trialMap = new Map();
+      for (const line of effectiveLines) {
+        const cur = trialMap.get(line.account) || { debit: 0, credit: 0 };
+        if (line.side === 'Nợ') cur.debit += line.amount; else cur.credit += line.amount;
+        trialMap.set(line.account, cur);
+      }
+      const trialRows = Array.from(trialMap.entries()).map(([account, v]) => {
+        const endSigned = v.debit - v.credit;
+        return { account, debit: v.debit, credit: v.credit, endDebit: Math.max(endSigned, 0), endCredit: Math.max(-endSigned, 0) };
+      }).sort((a, b) => a.account.localeCompare(b.account, 'vi'));
+
+      $('#trialBalanceTable tbody').innerHTML = trialRows.map((r) => `
+        <tr>
+          <td><strong>${r.account}</strong></td>
+          <td>${formatMoney(r.debit)}</td>
+          <td>${formatMoney(r.credit)}</td>
+          <td><strong>${r.endDebit ? formatMoney(r.endDebit) : ''}</strong></td>
+          <td><strong>${r.endCredit ? formatMoney(r.endCredit) : ''}</strong></td>
+        </tr>
+      `).join('');
+
+      const endBalanceByAccount = new Map(trialRows.map((r) => [r.account, r.endDebit - r.endCredit]));
+      const sumByPrefix = (prefixes) => {
+        let sum = 0;
+        for (const [account, endSigned] of endBalanceByAccount.entries()) {
+          if (!prefixes.some((p) => account.startsWith(p))) continue;
+          sum += endSigned;
+        }
+        return sum;
+      };
+      const assets = sumByPrefix(['1']);
+      const liabilities = -sumByPrefix(['3']);
+      const equity = -sumByPrefix(['4']);
+      const diff = assets - (liabilities + equity);
+
+      $('#balanceSheetCards').innerHTML = [
+        { title: 'Tài sản', value: formatMoney(assets), note: 'Tổng dư Nợ nhóm 1' },
+        { title: 'Nợ phải trả', value: formatMoney(liabilities), note: 'Tổng dư Có nhóm 3' },
+        { title: 'Vốn chủ sở hữu', value: formatMoney(equity), note: 'Tổng dư Có nhóm 4 (bao gồm 421 nếu kết chuyển)' },
+        { title: 'Cân đối', value: diff === 0 ? 'OK' : 'Lệch', note: `Tài sản - (Nợ + Vốn) = ${formatMoney(diff)}` },
+        { title: 'Số dư tiền', value: balanceText(result.report.balances.cash + result.report.balances.bank), note: '111 + 112/113' },
+        { title: 'Số dư công nợ', value: balanceText(result.report.balances.ar - result.report.balances.ap), note: '131 - 331 (tham khảo)' }
+      ].map((c) => `
+        <div class="demo-report-card">
+          <div class="demo-report-title">${c.title}</div>
+          <div class="demo-report-value">${c.value}</div>
+          <div class="demo-report-note">${c.note}</div>
+        </div>
+      `).join('');
+
+      const diagnostic = [
+        `Scenario: ${result.scenario.name}`,
+        `Kind: ${result.kind}`,
+        `Cân Nợ/Có: ${result.check.isBalancedEffective ? 'OK' : 'Lệch'}`,
+        `IdempotencyKey: ${result.order.idempotencyKey}`
+      ].join('\n');
+      const slideoverDebugBtn = $('#demoDebugBtn');
+      if (slideoverDebugBtn) slideoverDebugBtn.remove();
+      const debugBtn = document.createElement('button');
+      debugBtn.id = 'demoDebugBtn';
+      debugBtn.className = 'btn btn-secondary demo-debug-btn';
+      debugBtn.type = 'button';
+      debugBtn.textContent = 'Xem output JSON';
+      debugBtn.addEventListener('click', () => {
+        openSlideover(
+          'Output JSON (tổng hợp)',
+          result.scenario.name,
+          `<pre class="rule-code">${JSON.stringify({ kind: result.kind, journalLines: result.journalLines, closingLines: result.closingLines, journalLinesEffective: result.journalLinesEffective, documents: result.documents, report: result.report, check: result.check }, null, 2)}</pre><pre class="rule-code">${diagnostic}</pre>`
+        );
+      });
+      $('.demo-toolbar').appendChild(debugBtn);
+    };
+
+    const init = () => {
+      const select = $('#scenarioSelect');
+      select.innerHTML = scenarios.map((s) => `<option value="${s.id}">${s.name}</option>`).join('');
+      $('#rebuildBtn').addEventListener('click', render);
+      $('#scenarioSelect').addEventListener('change', render);
+      $('#cogsModeSelect').addEventListener('change', render);
+      $('#bankModeSelect').addEventListener('change', render);
+      $('#closingToggle').addEventListener('change', render);
+      $('#closingPeriodSelect').addEventListener('change', render);
+      $('#ledgerAccountSelect').addEventListener('change', render);
+      render();
+    };
+
+    init();
+  </script>
+</body>
+</html>

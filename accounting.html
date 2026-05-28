@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GODI - Chi tiết tính năng Kế toán</title>
+  <meta
+    name="description"
+    content="Chi tiết tính năng Kế toán của hệ thống GODI, gồm toàn bộ page cần có trên GODI PORTAL và các liên kết dữ liệu từ GODI POS (Web), GODI App."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="detail-page">
+  <main class="detail-shell">
+    <section class="detail-page-header">
+      <div class="detail-header-top">
+        <span class="detail-page-tag">Module chi tiết</span>
+        <div class="header-link-group">
+          <a class="back-link" href="accounting-demo.html">Mở demo kế toán</a>
+          <a class="back-link" href="../index.html#features">Quay lại danh mục tính năng</a>
+        </div>
+      </div>
+      <h1>Kế toán</h1>
+      <p>
+        Module kế toán tại GODI đóng vai trò tổng hợp và chuẩn hóa số liệu tài chính từ bán hàng, payment, hóa đơn
+        và các nghiệp vụ vận hành khác. Đây là module chủ yếu đặt trên GODI PORTAL nhưng phải nhận dữ liệu chuẩn
+        từ tất cả nền tảng còn lại.
+      </p>
+      <div class="detail-meta">
+        <span class="detail-chip">Quản trị tập trung trên PORTAL</span>
+        <span class="detail-chip">Nhận dữ liệu từ bán hàng, payment và hóa đơn</span>
+        <span class="detail-chip">Phục vụ báo cáo tài chính và đối soát</span>
+      </div>
+
+      <div class="scope-grid">
+        <article class="scope-card">
+          <span class="scope-card-tag">GODI PORTAL</span>
+          <h3>Hạch toán và kiểm tra</h3>
+          <p>Thiết lập tài khoản kế toán, bút toán, kỳ kế toán, sổ sách, công nợ, doanh thu và báo cáo tài chính nghiệp vụ.</p>
+        </article>
+        <article class="scope-card">
+          <span class="scope-card-tag">GODI POS (Web) / App</span>
+          <h3>Gửi dữ liệu nguồn</h3>
+          <p>Cung cấp dữ liệu giao dịch, thanh toán, hoàn tiền, doanh thu theo thời gian thực hoặc theo lô về hệ thống kế toán.</p>
+        </article>
+        <article class="scope-card">
+          <span class="scope-card-tag">Liên kết hệ thống</span>
+          <h3>Đối soát nhiều nguồn</h3>
+          <p>Kế toán phải đối soát được giữa đơn hàng, payment, hóa đơn, vận hành và các nguồn phát sinh chênh lệch.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Danh sách page cần có</h2>
+        <p class="detail-note">Các page kế toán nên ưu tiên khả năng kiểm tra, tổng hợp, đối chiếu và khóa sổ theo kỳ.</p>
+      </div>
+
+      <div class="detail-grid">
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">GODI PORTAL</span>
+            <h3>Page cấu hình kế toán</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page danh mục tài khoản kế toán và mapping tài khoản theo từng loại giao dịch.</li>
+            <li>Page cấu hình kỳ kế toán, trạng thái mở sổ, khóa sổ và người chịu trách nhiệm.</li>
+            <li>Page cấu hình quy tắc hạch toán cho bán hàng, payment, hóa đơn, hoàn tiền, chiết khấu và dịch vụ.</li>
+            <li>Page cấu hình mã chi nhánh, trung tâm doanh thu, mã bộ phận và sơ đồ hạch toán nội bộ.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">GODI PORTAL</span>
+            <h3>Page nghiệp vụ kế toán chính</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page tổng hợp doanh thu theo ngày, chi nhánh, nền tảng và trạng thái hạch toán.</li>
+            <li>Page tạo hoặc sinh tự động bút toán từ giao dịch bán hàng và payment.</li>
+            <li>Page danh sách chứng từ kế toán, lọc theo loại chứng từ, kỳ kế toán và trạng thái xử lý.</li>
+            <li>Page chi tiết chứng từ để xem nguồn dữ liệu gốc, bút toán phát sinh và lịch sử chỉnh sửa.</li>
+            <li>Page quản lý công nợ khách hàng, công nợ đối tác và lịch sử đối chiếu công nợ.</li>
+            <li>Page quản lý hoàn tiền, giảm trừ doanh thu và điều chỉnh chứng từ liên quan.</li>
+            <li>Page sổ nhật ký chung, sổ cái, sổ chi tiết và bảng cân đối phát sinh.</li>
+            <li>Page khóa sổ cuối kỳ, theo dõi các lỗi còn tồn trước khi chốt kỳ kế toán.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Đối soát</span>
+            <h3>Page kiểm tra chênh lệch số liệu</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page đối soát doanh thu giữa đơn hàng, payment và hóa đơn.</li>
+            <li>Page đối soát tiền mặt theo ca làm việc, theo điểm bán và theo kỳ.</li>
+            <li>Page đối soát giao dịch QR, thẻ, chuyển khoản với báo cáo cổng payment.</li>
+            <li>Page danh sách chênh lệch cần xử lý thủ công hoặc cần chuyển lại nguồn dữ liệu.</li>
+            <li>Page nhật ký thao tác điều chỉnh số liệu và phê duyệt điều chỉnh.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Báo cáo tài chính</span>
+            <h3>Page đầu ra phục vụ quản trị</h3>
+          </div>
+          <ul class="page-list">
+            <li>Page báo cáo doanh thu theo chi nhánh, nền tảng và loại hình kinh doanh.</li>
+            <li>Page báo cáo công nợ, dòng tiền, chiết khấu và hoàn tiền.</li>
+            <li>Page báo cáo lãi gộp, phân tích doanh thu theo nhóm sản phẩm hoặc dịch vụ.</li>
+            <li>Page báo cáo phục vụ kiểm toán nội bộ, tra cứu chứng từ và truy vết nguồn gốc số liệu.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Nghiệp vụ & chứng từ trọng tâm (SME)</h2>
+        <p class="detail-note">Tập trung các chứng từ phổ biến: Thu, Chi, Nhập, Xuất, Mua, Bán. Hỗ trợ sinh chứng từ tự động từ POS/App và cho phép kế toán kiểm tra, duyệt, điều chỉnh.</p>
+      </div>
+
+      <div class="detail-grid">
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Thu</span>
+            <h3>Phiếu thu (tiền mặt / chuyển khoản)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Nguồn: thu tại quầy (POS), thu trên App, thu công nợ khách hàng, thu khác.</li>
+            <li>Trạng thái: nháp → chờ duyệt → đã ghi sổ → đã khóa kỳ; hỗ trợ hủy/đảo (bút toán đảo).</li>
+            <li>Thông tin bắt buộc: người nộp, lý do thu, nguồn tiền, tài khoản nhận, chứng từ tham chiếu (đơn/hoá đơn/giao dịch payment).</li>
+            <li>Hạch toán mẫu: Nợ 111/112; Có 131 (thu công nợ) hoặc Có 511/3331 (thu bán hàng) hoặc Có 711 (thu khác).</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Chi</span>
+            <h3>Phiếu chi (tiền mặt / chuyển khoản)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Nguồn: chi mua hàng, chi phí vận hành, chi hoàn tiền, chi khác; có thể sinh từ đề nghị thanh toán.</li>
+            <li>Kiểm soát: định mức chi, nhà cung cấp, hợp đồng, hóa đơn đầu vào; phân bổ chi phí theo chi nhánh/bộ phận.</li>
+            <li>Hạch toán mẫu: Nợ 331/152/156/642/635; Có 111/112 (tuỳ mục đích chi).</li>
+            <li>Hoàn tiền: liên kết giao dịch payment và chứng từ bán hàng để đảm bảo đối soát doanh thu.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Nhập</span>
+            <h3>Phiếu nhập kho</h3>
+          </div>
+          <ul class="page-list">
+            <li>Trường hợp: nhập mua, nhập trả lại, nhập điều chỉnh, nhập chuyển kho.</li>
+            <li>Thông tin: kho, mặt hàng, số lượng, đơn giá, thuế, lô/hạn dùng (nếu có), chứng từ mua tham chiếu.</li>
+            <li>Hạch toán mẫu (kê khai thường xuyên): Nợ 156/152; Có 331 (nhập mua chưa thanh toán) hoặc Có 111/112 (mua trả ngay).</li>
+            <li>Định giá: hỗ trợ bình quân gia quyền (liên hoàn/cuối kỳ) hoặc FIFO theo cấu hình.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Xuất</span>
+            <h3>Phiếu xuất kho</h3>
+          </div>
+          <ul class="page-list">
+            <li>Trường hợp: xuất bán, xuất nội bộ, xuất hủy/hao hụt, xuất điều chỉnh, xuất chuyển kho.</li>
+            <li>Ràng buộc: không cho xuất âm (tuỳ cấu hình), cảnh báo tồn kho, theo dõi chênh lệch kiểm kê.</li>
+            <li>Hạch toán mẫu (xuất bán): Nợ 632; Có 156/152 (giá vốn).</li>
+            <li>Liên kết bán hàng: đối chiếu số lượng xuất với số lượng bán theo đơn/hóa đơn.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Mua</span>
+            <h3>Mua hàng & công nợ phải trả</h3>
+          </div>
+          <ul class="page-list">
+            <li>Luồng: đơn mua → nhận hàng (nhập kho) → hóa đơn đầu vào → thanh toán → đối chiếu công nợ.</li>
+            <li>Thuế GTGT: theo dõi 1331, điều kiện khấu trừ và trạng thái hồ sơ hóa đơn.</li>
+            <li>Hạch toán mẫu: Nợ 156/152 (giá chưa thuế), Nợ 1331 (thuế); Có 331 (phải trả).</li>
+            <li>Thanh toán NCC: Nợ 331; Có 111/112; hỗ trợ tạm ứng và bù trừ.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Bán</span>
+            <h3>Bán hàng, doanh thu & công nợ phải thu</h3>
+          </div>
+          <ul class="page-list">
+            <li>Luồng: tạo đơn (POS/App) → thu tiền (payment) → xuất hoá đơn (nếu có) → ghi nhận doanh thu → đối soát.</li>
+            <li>Hạch toán mẫu (bán chịu): Nợ 131; Có 511, Có 3331 (thuế GTGT đầu ra).</li>
+            <li>Hạch toán mẫu (thu ngay): Nợ 111/112; Có 511, Có 3331; đồng thời ghi giá vốn: Nợ 632; Có 156/152.</li>
+            <li>Giảm trừ/chiết khấu/hoàn tiền: theo dõi 521/532/531 (tuỳ cấu hình) và bút toán điều chỉnh tương ứng.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Phương pháp hạch toán & kiểm soát sổ sách</h2>
+        <p class="detail-note">Thiết kế theo nguyên tắc kế toán kép (Nợ/Có), sinh bút toán tự động từ giao dịch và vẫn cho phép kế toán điều chỉnh có kiểm soát.</p>
+      </div>
+
+      <div class="detail-grid">
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Sổ sách</span>
+            <h3>Nhật ký chung → Sổ cái → Sổ chi tiết</h3>
+          </div>
+          <ul class="page-list">
+            <li>Mọi chứng từ phát sinh bút toán được ghi vào sổ nhật ký chung, sau đó lên sổ cái theo tài khoản.</li>
+            <li>Sổ chi tiết theo đối tượng: khách hàng (131), nhà cung cấp (331), hàng tồn kho (156/152), tiền (111/112).</li>
+            <li>Chuẩn hóa “nguồn chứng từ” để truy vết: đơn hàng, giao dịch payment, hóa đơn điện tử, phiếu kho.</li>
+            <li>Nhật ký chung (General Journal): hiển thị ngày hạch toán, số chứng từ, diễn giải, cặp tài khoản Nợ/Có, số tiền và dimension (chi nhánh/kho/đối tượng/thuế suất).</li>
+            <li>Phương pháp ghi sổ Nhật ký chung: mọi nghiệp vụ được ghi theo thời gian phát sinh; mỗi chứng từ có nhiều dòng định khoản; hệ thống cho phép hiển thị theo 2 dạng: (1) dạng dòng bút toán (mỗi dòng là 1 tài khoản với Nợ hoặc Có) hoặc (2) dạng cặp định khoản (mỗi dòng là 1 cặp Nợ/Có với 1 số tiền) để dễ đọc và đối chiếu.</li>
+            <li>Quy tắc lên sổ: chỉ lấy bút toán trạng thái Posted; sắp xếp theo ngày hạch toán rồi theo số chứng từ; luôn kiểm tra tổng Nợ = tổng Có theo từng chứng từ và theo kỳ.</li>
+            <li>Truy vết nguồn: mỗi dòng nhật ký phải có sourceRef (đơn hàng/payment/hóa đơn/phiếu kho), người tạo, và liên kết mở chứng từ gốc.</li>
+            <li>Sổ chi tiết tài khoản: lọc theo tài khoản + kỳ + chi nhánh/kho/đối tượng; có số dư đầu kỳ, phát sinh, số dư cuối kỳ; hỗ trợ drill-down về chứng từ gốc.</li>
+            <li>Bảng cân đối phát sinh (Trial Balance): tổng hợp phát sinh Nợ/Có theo tài khoản và dư cuối (dư Nợ/dư Có) để kiểm tra cân đối và phục vụ khóa sổ.</li>
+            <li>Bảng cân đối kế toán: tổng hợp số dư cuối theo nhóm tài sản (nhóm 1), nợ phải trả (nhóm 3) và vốn chủ (nhóm 4); khi kết chuyển thì 421 phải phản ánh kết quả.</li>
+            <li>Báo cáo công nợ phải thu/phải trả: theo đối tượng (khách hàng/NCC), theo kỳ, theo hạn thanh toán; có đối chiếu phát sinh và dư cuối; hỗ trợ “aging” (0-30, 31-60, 61-90, &gt;90 ngày).</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Tự động hóa</span>
+            <h3>Quy tắc sinh bút toán (Accounting Rules)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Mapping tài khoản theo: loại chứng từ, phương thức thanh toán, loại hàng hóa/dịch vụ, chi nhánh/bộ phận.</li>
+            <li>Trạng thái bút toán: tự động sinh → chờ duyệt → đã ghi sổ; cho phép khoá sửa khi đã chốt kỳ.</li>
+            <li>Hỗ trợ bút toán đảo và bút toán điều chỉnh để xử lý hoàn tiền, sai sót, chênh lệch đối soát.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Tự động chứng từ</span>
+            <h3>Muốn “tự động” cần chuẩn bị gì?</h3>
+          </div>
+          <ul class="page-list">
+            <li>Chuẩn hóa dữ liệu nguồn: đơn hàng, thanh toán, hóa đơn, nhập/xuất kho phải có mã tham chiếu duy nhất để tránh sinh trùng.</li>
+            <li>Thiết lập danh mục & mapping: tài khoản kế toán, kho, nhóm hàng/dịch vụ, phương thức thanh toán, thuế suất, chi nhánh/bộ phận.</li>
+            <li>Thiết kế “Rule Engine”: mỗi loại nghiệp vụ (thu/chi/mua/bán/nhập/xuất/hoàn) có bộ rule sinh bút toán Nợ/Có, kèm điều kiện và ưu tiên.</li>
+            <li>Thiết kế trạng thái chứng từ: nháp → chờ duyệt → đã ghi sổ; cho phép “đảo chứng từ” thay vì sửa trực tiếp khi đã ghi sổ.</li>
+            <li>Thiết kế hàng đợi lỗi: chứng từ thiếu mapping/thiếu dữ liệu phải vào danh sách “cần xử lý”, có gợi ý nguyên nhân và cách khắc phục.</li>
+            <li>Đối soát bắt buộc: đối chiếu đơn hàng ↔ payment ↔ hóa đơn ↔ phiếu kho trước khi cho phép khóa sổ kỳ.</li>
+            <li>Nhật ký & phân quyền: ai tạo/sinh tự động, ai duyệt, ai sửa; mọi thay đổi có lịch sử, có lý do điều chỉnh.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Tồn kho</span>
+            <h3>Giá vốn & phương pháp tính giá</h3>
+          </div>
+          <ul class="page-list">
+            <li>Mặc định theo kê khai thường xuyên để phản ánh tồn kho và giá vốn sát thực tế theo giao dịch.</li>
+            <li>Phương pháp tính giá: bình quân gia quyền (liên hoàn/cuối kỳ) hoặc FIFO; cấu hình theo doanh nghiệp.</li>
+            <li>Kiểm kê: tạo chứng từ chênh lệch kiểm kê và hạch toán hao hụt/thừa theo quy định nội bộ.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Kỳ kế toán</span>
+            <h3>Khóa sổ & kết chuyển cuối kỳ</h3>
+          </div>
+          <ul class="page-list">
+            <li>Quy trình: rà soát đối soát → xử lý bút toán treo → chốt kỳ → khoá sổ; ghi nhận lịch sử khoá sổ.</li>
+            <li>Kết chuyển doanh thu/chi phí (tuỳ phạm vi): 511/632/642/635… sang 911 để xác định kết quả.</li>
+            <li>Kết chuyển mẫu tối thiểu cho SME: Nợ 511.*; Có 911 (doanh thu) → Nợ 911; Có 632 (giá vốn) → Nợ 911; Có 421 (nếu lãi).</li>
+            <li>Điều kiện cho phép khóa kỳ: bảng cân đối phát sinh cân, không còn chứng từ PendingFix, các đối soát bắt buộc đã đạt trạng thái “khớp”.</li>
+            <li>Phân quyền: kế toán viên lập chứng từ, kế toán trưởng duyệt và khoá kỳ; mọi thay đổi có nhật ký.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <div class="detail-section-heading">
+        <h2>Đặc tả nghiệp vụ</h2>
+        <p class="detail-note">Mục tiêu: Dev không cần nền tảng kế toán vẫn triển khai được luồng sinh chứng từ + sinh bút toán + đối soát. Tất cả bút toán đều theo nguyên tắc Nợ/Có và cân bằng tổng Nợ = tổng Có.</p>
+      </div>
+
+      <div class="detail-grid">
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Chuẩn dữ liệu</span>
+            <h3>Đối tượng & trạng thái chuẩn</h3>
+          </div>
+          <ul class="page-list">
+            <li>AccountingDocument (Chứng từ): id, type, docNo, docDate, orgId, branchId, currency, totalAmount, status, sourceRef, sourceType, note, createdBy, approvedBy.</li>
+            <li>JournalEntry (Bút toán): id, docId, postDate, status; JournalLine: accountNo, debit, credit, dimensions (branch/department/costCenter), partnerRef (customer/supplier), itemGroupRef.</li>
+            <li>StockMove (Phiếu kho): id, type (IN/OUT/TRANSFER/ADJUST), warehouseId, lines (itemId, qty, unitCost), sourceRef.</li>
+            <li>Trạng thái gợi ý: Draft → PendingApproval → Posted → Locked; Cancelled (không xóa, chỉ hủy); Reversed (đã tạo chứng từ đảo).</li>
+            <li>Idempotency: mỗi chứng từ tự sinh phải có khóa duy nhất (orgId + sourceType + sourceRef + docType) để không sinh trùng khi đồng bộ lại.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Nguồn sự kiện</span>
+            <h3>Bản đồ “sự kiện → chứng từ”</h3>
+          </div>
+          <ul class="page-list">
+            <li>Bán hàng (Order Completed) → Chứng từ Bán + Phiếu thu/ghi nhận phải thu + (nếu hàng hóa) Phiếu xuất kho + Giá vốn.</li>
+            <li>Thanh toán (Payment Success) → Phiếu thu (nếu thu sau) hoặc đối soát cập nhật chứng từ bán (nếu thu cùng lúc).</li>
+            <li>Hoàn tiền (Refund Success) → Phiếu chi/giảm trừ + bút toán đảo doanh thu/thuế (tùy chính sách) + nhập kho lại (nếu hoàn hàng).</li>
+            <li>Mua hàng (Purchase Invoice Received) → Chứng từ Mua + (nếu nhập kho) Phiếu nhập kho; thanh toán NCC tạo Phiếu chi.</li>
+            <li>Nhập kho/Xuất kho thủ công → Phiếu nhập/xuất + bút toán tồn kho/giá vốn/chi phí tùy lý do.</li>
+            <li>Thu/Chi khác (không gắn mua/bán) → Phiếu thu/chi khác.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Thu</span>
+            <h3>Phiếu thu (Receipt Voucher)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Input tối thiểu: docDate, payerName/partnerRef, amount, paymentMethod (CASH/BANK/QR/CARD), sourceRef (nếu có), reason.</li>
+            <li>Validation: amount &gt; 0; nếu thu công nợ thì partnerRef bắt buộc; nếu BANK thì bankAccountRef bắt buộc.</li>
+            <li>Hạch toán chuẩn: Nợ 111 (tiền mặt) hoặc Nợ 112 (ngân hàng); Có 131 (thu công nợ) hoặc Có 711 (thu khác).</li>
+            <li>Nếu thu ngay từ bán hàng và hệ thống chọn “ghi nhận doanh thu theo thu tiền” thì phiếu thu có thể kèm bút toán Có 511, Có 3331; khuyến nghị tách: Bán (doanh thu) và Thu (dòng tiền) để đối soát rõ.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Chi</span>
+            <h3>Phiếu chi (Payment Voucher)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Input tối thiểu: docDate, payeeName/partnerRef, amount, paymentMethod, sourceRef (nếu có), reason.</li>
+            <li>Validation: amount &gt; 0; nếu chi NCC thì partnerRef bắt buộc; nếu hoàn tiền khách thì sourceRef(payment/order) bắt buộc.</li>
+            <li>Hạch toán chuẩn: Có 111/112; Nợ 331 (trả NCC) hoặc Nợ 811 (chi khác) hoặc Nợ 521/531/532 (giảm trừ) hoặc Nợ 131 (hoàn lại tiền khi đã thu trước, tùy mô hình).</li>
+            <li>Khuyến nghị có “lý do chi” (expenseType) để mapping tài khoản tự động (642/635/811...).</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Mua</span>
+            <h3>Mua hàng (Purchase)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Input: supplierRef, invoiceNo, invoiceDate, lines (item/service, qty, unitPrice, taxRate), totals (beforeTax, vat, afterTax), warehouseRef (nếu là hàng), paymentStatus.</li>
+            <li>Validation: có ít nhất 1 line; số tiền khớp tổng; thuế suất hợp lệ; nếu hàng hóa thì warehouseRef bắt buộc khi “nhập kho”.</li>
+            <li>Hạch toán chuẩn (hàng hóa nhập kho, có VAT): Nợ 156/152 = beforeTax; Nợ 1331 = vat; Có 331 = afterTax.</li>
+            <li>Thanh toán NCC (phiếu chi): Nợ 331; Có 111/112.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Bán</span>
+            <h3>Bán hàng (Sales)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Input: customerRef (nếu bán chịu), orderNo, orderDate, lines (item/service, qty, unitPrice, taxRate), totals (beforeTax, vat, afterTax), paymentMethod(s), invoiceRef (nếu xuất HĐ).</li>
+            <li>Validation: tổng tiền khớp; nếu bán chịu thì customerRef bắt buộc; nếu có hàng hóa thì phải có phiếu xuất kho hoặc cơ chế trừ tồn.</li>
+            <li>Hạch toán doanh thu: Nợ 131 (bán chịu) hoặc Nợ 111/112 (thu ngay); Có 511 = beforeTax; Có 3331 = vat.</li>
+            <li>Hạch toán giá vốn (nếu hàng hóa): Nợ 632; Có 156/152 theo giá vốn tính (FIFO/bình quân).</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Nhiều mặt hàng</span>
+            <h3>1 phiếu có nhiều mặt hàng xử lý như thế nào?</h3>
+          </div>
+          <ul class="page-list">
+            <li>Nguyên tắc: chứng từ có nhiều dòng (line) nhưng bút toán phải cân tổng. Có thể ghi sổ theo 2 mức: (A) tổng hợp theo nhóm, (B) chi tiết theo từng dòng để truy vết.</li>
+            <li>Doanh thu/thuế: gom nhóm theo thuế suất và nhóm doanh thu. Ví dụ nếu có 2 thuế suất (0% và 10%) thì tạo 2 dòng Có 511 tương ứng và 2 dòng Có 3331 tương ứng.</li>
+            <li>Giá vốn/tồn kho: tính giá vốn theo từng mặt hàng (theo FIFO/bình quân), sau đó có thể (A) gom tổng Nợ 632 và tổng Có 156, hoặc (B) tách 632/156 theo mặt hàng/kho để kiểm tra dễ hơn.</li>
+            <li>Hàng hóa vs dịch vụ: dòng dịch vụ không có phiếu kho và không tham gia 632/156; dòng hàng hóa mới phát sinh 632/156.</li>
+            <li>Chi nhánh/kho: nếu 1 phiếu xuất từ nhiều kho, thì bút toán Có 156 nên tách theo kho (warehouseId) để khớp sổ kho; Nợ 632 có thể gom hoặc tách theo kho.</li>
+            <li>Làm tròn: làm tròn ở cấp dòng trước (round line), rồi tổng hợp lên chứng từ; nếu lệch 1–2 đồng do làm tròn thì đưa vào tài khoản chênh lệch làm tròn theo cấu hình (hoặc điều chỉnh dòng thuế lớn nhất).</li>
+            <li>Thu nhiều phương thức: Nợ 111/112 có thể tách 2 dòng (CASH và BANK) theo số tiền thực thu; tổng Nợ vẫn bằng tổng Có.</li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="multi-lines" data-rule-title="Ví dụ: 1 phiếu nhiều mặt hàng (nhiều VAT, nhiều phương thức, nhiều kho)">
+                Xem ví dụ cụ thể: 1 phiếu có nhiều dòng hàng hóa + dịch vụ, nhiều thuế suất và thu nhiều phương thức.
+              </button>
+            </li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Nhập/Xuất</span>
+            <h3>Phiếu kho (Stock In/Out)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Nhập kho do mua: được sinh từ chứng từ Mua khi trạng thái “đã nhận hàng”.</li>
+            <li>Xuất kho do bán: được sinh từ chứng từ Bán khi trạng thái “đã giao/hoàn tất đơn”.</li>
+            <li>Nhập/Xuất điều chỉnh: phải có reason (hư hỏng/hao hụt/kiểm kê/chuyển kho), và mapping tài khoản đối ứng (632/642/811...).</li>
+            <li>Giá vốn: lấy từ bảng cost theo phương pháp (FIFO/bình quân). Nếu chưa có giá, đưa vào hàng đợi lỗi để kế toán xử lý.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Tự sinh</span>
+            <h3>Thuật toán sinh chứng từ tự động (gợi ý triển khai)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Bước 1: nhận event (OrderCompleted/PaymentSuccess/PurchaseInvoice/StockMove...) và tạo idempotencyKey.</li>
+            <li>Bước 2: kiểm tra đã có chứng từ theo key chưa; có thì update/skip theo chính sách; không thì tạo Draft.</li>
+            <li>Bước 3: tính tiền trước thuế/thuế/tổng, chuẩn hóa làm tròn; build journal lines theo rule mapping.</li>
+            <li>Bước 4: validate mapping (tài khoản, đối tượng, kho, thuế). Nếu thiếu: chuyển trạng thái “PendingFix” và ghi lỗi chi tiết.</li>
+            <li>Bước 5: nếu cấu hình “Auto-Post” và đủ điều kiện: chuyển Posted; nếu không: PendingApproval để kế toán duyệt.</li>
+            <li>Bước 6: khi cần hủy: tạo chứng từ đảo (reverse) với bút toán đối ứng và liên kết về chứng từ gốc.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Bảng mapping</span>
+            <h3>Rule mẫu (IF → THEN) để Dev code thẳng</h3>
+          </div>
+          <ul class="page-list">
+            <li>
+              <button class="rule-trigger" type="button" data-rule="pay-method-map" data-rule-title="Mapping phương thức thanh toán (Cash/Bank/QR/Card)">
+                <strong>Mapping phương thức thanh toán:</strong> CASH → Nợ 111; BANK_TRANSFER/QR/CARD → Nợ 112. Nếu cần trạng thái “chờ đối soát” thì dùng 113.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="sale-paid-goods" data-rule-title="Bán hàng thu ngay (Hàng hóa)">
+                IF OrderCompleted AND paymentStatus = PAID AND goodsType = HÀNG_HÓA → THEN Doanh thu (111/112 → 511/3331) + Giá vốn (632 → 156/152).
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="sale-unpaid-ar" data-rule-title="Bán chịu (Công nợ phải thu)">
+                IF OrderCompleted AND paymentStatus = UNPAID → THEN Doanh thu (131 → 511/3331). Khi thu tiền: Phiếu thu (111/112 → 131).
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="sale-service" data-rule-title="Bán dịch vụ (không giá vốn)">
+                IF OrderCompleted AND goodsType = DỊCH_VỤ → THEN chỉ sinh Doanh thu (không có 632/156).
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="payment-success-receipt" data-rule-title="PaymentSuccess → sinh Phiếu thu (thu sau)">
+                IF PaymentSuccess mà chưa có Phiếu thu → THEN sinh Phiếu thu: Nợ 111/112; Có 131 (gắn customerRef + orderNo).
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="purchase-inv-vat" data-rule-title="Mua hàng nhập kho (có VAT)">
+                IF PurchaseInvoiceReceived AND inventory = TRUE AND hasVAT = TRUE → THEN Nợ 156/152; Nợ 1331; Có 331.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="purchase-inv-novat" data-rule-title="Mua hàng nhập kho (không VAT)">
+                IF PurchaseInvoiceReceived AND inventory = TRUE AND hasVAT = FALSE → THEN Nợ 156/152; Có 331.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="purchase-exp-vat" data-rule-title="Mua dịch vụ/chi phí (có VAT)">
+                IF PurchaseInvoiceReceived AND inventory = FALSE AND hasVAT = TRUE → THEN Nợ 642/627/641; Nợ 1331; Có 331.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="purchase-exp-novat" data-rule-title="Mua dịch vụ/chi phí (không VAT)">
+                IF PurchaseInvoiceReceived AND inventory = FALSE AND hasVAT = FALSE → THEN Nợ 642/627/641; Có 331.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="supplier-pay" data-rule-title="Trả nhà cung cấp (SupplierPaymentSuccess)">
+                IF SupplierPaymentSuccess → THEN Nợ 331; Có 111/112.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="stock-adjust-loss" data-rule-title="Xuất điều chỉnh hao hụt/hư hỏng">
+                IF StockAdjust (hao hụt/hư hỏng) → THEN Có 156; Nợ 632/642/811 theo reason mapping.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="stockcount-missing" data-rule-title="Kiểm kê thiếu">
+                IF StockCountResult = THIẾU → THEN Có 156; Nợ 632/642/811 hoặc treo Nợ 1381; Có 156.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="stockcount-extra" data-rule-title="Kiểm kê thừa">
+                IF StockCountResult = THỪA → THEN Nợ 156; Có 711 hoặc treo Nợ 156; Có 3381.
+              </button>
+            </li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="auto-post-conditions" data-rule-title="Điều kiện auto-post">
+                <strong>Điều kiện auto-post:</strong> đủ mapping + đủ đối tượng (131/331) + đủ giá vốn (632/156) + tổng Nợ = tổng Có.
+              </button>
+            </li>
+          </ul>
+        </article>
+
+        <article class="detail-block detail-block-full">
+          <div class="detail-block-header">
+            <span class="detail-chip">Thiết kế mapping</span>
+            <h3>Làm hệ thống mapping hiệu quả (theo hàng hoá, kho, chi nhánh...)</h3>
+          </div>
+          <ul class="page-list">
+            <li><strong>Nguyên tắc:</strong> mapping là “tra cứu cấu hình” theo nhiều chiều (dimension) + có thứ tự ưu tiên + có fallback, để Dev chỉ cần gọi 1 hàm resolveAccount().</li>
+            <li><strong>Dimension khuyến nghị:</strong> orgId, branchId, warehouseId, docType (Bán/Mua/Thu/Chi/Nhập/Xuất/Điều chỉnh), lineType (Hàng hoá/Dịch vụ), itemId, itemGroupId, paymentMethod, taxRate, expenseType, reason (hao hụt/kiểm kê...).</li>
+            <li><strong>Thiết kế ưu tiên (specific → generic):</strong> Item+Kho+Chi nhánh → Nhóm hàng+Kho → Nhóm hàng → Kho → Chi nhánh → Mặc định toàn công ty.</li>
+            <li><strong>Tách nhóm tài khoản theo mục đích:</strong> accountCash(111), accountBank(112/113), accountAR(131), accountAP(331), accountRevenue(511.*), accountVATOut(3331), accountVATIn(1331), accountInventory(156/152), accountCOGS(632), accountExpense(642/641/627/811), accountOtherIncome(711), accountSuspense(1381/3381).</li>
+            <li><strong>Kho (warehouse) chủ yếu ảnh hưởng:</strong> Có 156/152 (tồn kho) và giá vốn 632/156; nên cho phép mapping tồn kho theo kho hoặc theo nhóm kho.</li>
+            <li>
+              <strong>Danh mục kho cần khai báo tài khoản gì để “kho hoạt động”:</strong>
+              tối thiểu phải có mapping warehouseId → tài khoản tồn kho (156.x cho hàng hóa hoặc 152.x cho nguyên vật liệu).
+              Khuyến nghị thêm: tài khoản điều chuyển nội bộ (nếu tách 156 theo kho thì dùng Nợ 156(kho nhận) / Có 156(kho xuất));
+              tài khoản kiểm kê thừa/thiếu (711/811 hoặc treo 3381/1381); tài khoản hàng đi đường (151) nếu có quy trình nhập kho theo “nhận hàng trước, hóa đơn sau”.
+            </li>
+            <li>
+              <strong>Bài toán “tài khoản cha chưa có con, sau này tạo con thì phải chuyển chứng từ cũ” (giải pháp an toàn):</strong>
+              không ghi sổ vào tài khoản tổng hợp (node cha). Thiết kế danh mục tài khoản có cờ <em>Cho phép hạch toán</em> (postable) chỉ bật ở tài khoản chi tiết (leaf).
+              Khi cần ghi vào nhóm chưa phân loại, dùng một tài khoản leaf mặc định như “Chưa phân loại” (ví dụ 5111.999) để ghi sổ ngay từ đầu.
+              Khi phát sinh nhu cầu chi tiết hóa sau này, báo cáo có thể <em>roll-up</em> theo cây tài khoản mà không cần sửa lịch sử; nếu bắt buộc phân bổ lại thì dùng chức năng <em>phân loại lại</em> tạo bút toán điều chỉnh/đảo trong kỳ chưa khóa sổ, không update trực tiếp chứng từ đã ghi sổ.
+            </li>
+            <li>
+              <strong>Ví dụ cụ thể (doanh thu):</strong>
+              <div class="demo-example">
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Danh mục tài khoản ban đầu</span>
+                  <pre class="rule-code">5111 (Doanh thu bán hàng) - isPostable = FALSE
+5111.999 (Doanh thu chưa phân loại) - isPostable = TRUE</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Phát sinh chứng từ tháng 6 (khi chưa có 5111.01/5111.02)</span>
+                  <pre class="rule-code">Bán thu ngay 110.000 (VAT 10%):
+Nợ 111      110.000
+  Có 5111.999 100.000
+  Có 3331     10.000</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Tháng 7 tạo tài khoản con để chi tiết</span>
+                  <pre class="rule-code">5111.01 (Doanh thu nước uống) - isPostable = TRUE
+5111.02 (Doanh thu đồ ăn)    - isPostable = TRUE</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Từ tháng 7: cập nhật mapping cho giao dịch mới</span>
+                  <pre class="rule-code">itemGroup=DOUONG → Có 5111.01
+itemGroup=ANVAT  → Có 5111.02
+không xác định   → Có 5111.999</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Báo cáo roll-up (không cần sửa lịch sử)</span>
+                  <pre class="rule-code">Báo cáo doanh thu theo 5111:
+SUM(Có 5111.01) + SUM(Có 5111.02) + SUM(Có 5111.999)
+→ vẫn lên tổng đúng cho 5111 (tài khoản cha).</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Nếu bắt buộc phân bổ lại tháng 6 (chỉ kỳ chưa khóa sổ)</span>
+                  <pre class="rule-code">Chứng từ phân loại lại (Reclass) 60.000 sang nước uống, 40.000 sang đồ ăn:
+Nợ 5111.999   100.000
+  Có 5111.01   60.000
+  Có 5111.02   40.000
+
+Ghi chú:
+- Chỉ thay đổi phân loại tài khoản doanh thu (VAT 3331 không đổi nếu VAT suất không đổi).
+- Không sửa trực tiếp chứng từ bán đã ghi sổ; tạo chứng từ Reclass để có audit log.</pre>
+                </div>
+              </div>
+            </li>
+            <li>
+              <strong>Ví dụ hướng A (không tạo 5111.999, không tách 51111/51112; tách bằng dimension):</strong>
+              <div class="demo-example">
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Danh mục tài khoản</span>
+                  <pre class="rule-code">5111 (Doanh thu bán hàng) - isPostable = TRUE
+(không tạo 5111.999)
+(không tạo 51111/51112)</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Danh mục dimension để tách báo cáo</span>
+                  <pre class="rule-code">Dimension: revenueCategoryId
+- REV-01: Nước uống
+- REV-02: Đồ ăn</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Khi bán hàng (mọi dòng doanh thu vẫn vào 5111, nhưng có dimension)</span>
+                  <pre class="rule-code">Đơn 1 (nước uống) 110.000 (VAT 10%):
+Nợ 111     110.000
+  Có 5111  100.000   (revenueCategoryId=REV-01)
+  Có 3331   10.000   (taxRate=10%)
+
+Đơn 2 (đồ ăn) 220.000 (VAT 10%):
+Nợ 111     220.000
+  Có 5111  200.000   (revenueCategoryId=REV-02)
+  Có 3331   20.000   (taxRate=10%)</pre>
+                </div>
+                <div class="demo-example-row">
+                  <span class="demo-example-label">Báo cáo tự tách mà không đổi tài khoản</span>
+                  <pre class="rule-code">Báo cáo doanh thu theo tài khoản (tổng):
+SUM(Có 5111) = 300.000
+
+Báo cáo doanh thu theo ngành hàng (dimension):
+SUM(Có 5111 WHERE revenueCategoryId=REV-01) = 100.000
+SUM(Có 5111 WHERE revenueCategoryId=REV-02) = 200.000
+
+Ghi chú:
+- Khi sau này muốn thêm nhóm mới (REV-03), chỉ thêm dimension value + mapping itemGroup → revenueCategoryId.
+- Không cần tạo tài khoản con, không cần reclass lịch sử, không đụng chứng từ đã ghi sổ.</pre>
+                </div>
+              </div>
+            </li>
+            <li>
+              <strong>Ví dụ: đang hạch toán tiền mặt vào 111, sau này phát sinh 1111/1112:</strong>
+              cách an toàn là giữ 111 làm tài khoản tổng hợp (không hạch toán trực tiếp) và chuẩn bị 1119 “tiền mặt chưa phân loại” (leaf, postable) ngay từ đầu.
+              Khi tách chi tiết, cập nhật mapping: quỹ/điểm thu A → 1111, quỹ/điểm thu B → 1112; các bút toán cũ đã ghi vào 111/1119 không bắt buộc sửa (báo cáo tổng hợp vẫn đúng bằng roll-up).
+              Nếu doanh nghiệp bắt buộc phân bổ lại dữ liệu cũ thì chỉ làm trong kỳ chưa khóa sổ bằng chứng từ phân loại lại: Nợ 1111 hoặc 1112; Có 1119 (theo tiêu chí cashboxId/chi nhánh/thu ngân); phần không đủ tiêu chí giữ ở 1119 và đưa vào danh sách cần xử lý.
+              Khuyến nghị mạnh: thay vì tách 111 thành 1111/1112 theo “loại quỹ”, nên giữ 111 và thêm dimension cashboxId để phân tách báo cáo, tránh phải tái cấu trúc tài khoản sau này.
+            </li>
+            <li>
+              <strong>Không “đổi ID” tài khoản để tái sử dụng:</strong>
+              accountId là khóa kỹ thuật phải bất biến; không được lấy id cấp cha gán xuống cấp con rồi tạo id khác gán lại cho cha vì sẽ làm sai lịch sử (chứng từ cũ trỏ nhầm), phá liên kết ngoại, sai audit log, sai cache/replica và rủi ro khi tích hợp hệ thống khác.
+              Nếu cần thay đổi cấu trúc cây tài khoản, chỉ thay đổi parentId/isPostable/effectiveFrom; trường code hiển thị (111/1111/1112) có thể đổi theo version nhưng accountId không đổi.
+            </li>
+            <li><strong>Hàng hoá (item) chủ yếu ảnh hưởng:</strong> tài khoản doanh thu (511 theo nhóm hàng), tài khoản tồn kho (156/152), tài khoản giá vốn (632), và cách tính giá vốn.</li>
+            <li><strong>Thuế suất (taxRate):</strong> quyết định dòng 3331/1331 theo nhóm VAT; doanh thu 511 nên gom theo taxRate để đối chiếu.</li>
+            <li><strong>Thuật toán resolve (gợi ý):</strong> sắp xếp rule theo “điểm specificity” (match càng nhiều dimension càng cao), lấy rule đầu tiên; nếu không có thì fallback sang rule tổng quát hơn.</li>
+            <li><strong>Hiệu lực & phiên bản:</strong> rule có effectiveFrom/effectiveTo + version để thay đổi theo kỳ mà không làm sai lịch sử.</li>
+            <li><strong>UI cần có:</strong> màn hình test rule (nhập 1 case → trả ra tài khoản), màn hình “thiếu mapping” (PendingFix) kèm gợi ý dimension nào thiếu.</li>
+            <li>
+              <button class="rule-trigger" type="button" data-rule="auto-mapping-endtoend" data-rule-title="Bài toán: Bán 1 đơn nhiều mặt hàng → tự sinh chứng từ → tự đưa vào đúng tài khoản → lên báo cáo">
+                Xem bài toán end-to-end: bán 1 đơn nhiều mặt hàng, hệ thống tự sinh chứng từ và tự đưa vào đúng tài khoản/báo cáo.
+              </button>
+            </li>
+          </ul>
+        </article>
+
+        <article class="detail-block detail-block-full">
+          <div class="detail-block-header">
+            <span class="detail-chip">Reclass</span>
+            <h3>Chức năng “Phân loại lại” (Reclass) để chuyển tài khoản cha → tài khoản con trong kỳ chưa khóa</h3>
+          </div>
+          <ul class="page-list">
+            <li><strong>Mục tiêu:</strong> khi trước đây bạn ghi mọi thứ vào “tài khoản cha”, bây giờ muốn chia nhỏ ra “tài khoản con”, hệ thống tạo thêm <em>một chứng từ điều chỉnh</em> để chuyển số tiền cho đúng, thay vì sửa lại chứng từ cũ.</li>
+            <li><strong>Khi nào được chạy:</strong> chỉ chạy cho kỳ đang làm việc (chưa khóa sổ). Nếu kỳ đã khóa thì không được tự động thay đổi lại số liệu kỳ đó.</li>
+            <li><strong>Người dùng cần chọn gì:</strong> (1) kỳ cần xử lý (2) tài khoản cha đang chứa số tiền (3) tiêu chí chia (ví dụ theo quỹ, theo kho, theo nhóm hàng, theo chi nhánh…) (4) mỗi “giá trị tiêu chí” sẽ đưa về tài khoản con nào.</li>
+            <li><strong>Hệ thống sẽ làm gì (dễ hiểu):</strong> (1) gom các dòng phát sinh trong kỳ theo tiêu chí chia (2) tính tổng từng nhóm (3) tạo 1 chứng từ mới gồm nhiều dòng, trong đó mỗi dòng “cộng” vào tài khoản con, đồng thời “trừ” ra khỏi tài khoản cha với đúng số tiền tương ứng.</li>
+            <li><strong>Trước khi bấm chạy thật:</strong> hệ thống phải cho xem trước: nhóm nào sẽ chuyển, số tiền bao nhiêu, ảnh hưởng bao nhiêu chứng từ; nếu có dòng không đủ thông tin để chia thì đưa vào danh sách cần xử lý (không tự đoán).</li>
+            <li><strong>Chạy nhanh với dữ liệu lớn:</strong> thay vì mở từng chứng từ để cộng tay, hệ thống dùng cách “tổng hợp theo nhóm” rồi tạo 1 chứng từ điều chỉnh duy nhất (hoặc vài chứng từ theo chi nhánh/ngày) để xử lý nhanh.</li>
+            <li><strong>Chứng từ điều chỉnh có vào Sổ Nhật ký chung không:</strong> có. Khi chứng từ điều chỉnh được “ghi sổ”, nó xuất hiện như các chứng từ khác, nhưng có nhãn/loại riêng (ví dụ “Phân loại lại”). Nhật ký chung sẽ hiển thị cặp tài khoản + số tiền để người xem hiểu đây là “chuyển phân loại”, không làm thay đổi tổng số tiền của cả nhóm.</li>
+            <li>
+              <strong>Ví dụ dễ hình dung (và cách nó hiện trên Nhật ký chung):</strong>
+              tháng này đang để tất cả vào 111, sau đó muốn tách theo quỹ: Quỹ A → 1111, Quỹ B → 1112.
+              Hệ thống tạo 1 chứng từ điều chỉnh RC-06/2026-001 với các dòng sau:
+              <pre class="rule-code">Trên Nhật ký chung (dạng cặp):
+Có 111  / Nợ 1111   30.000   (chuyển phần Quỹ A)
+Có 111  / Nợ 1112   70.000   (chuyển phần Quỹ B)
+
+Diễn giải: “Phân loại lại tiền mặt theo quỹ” • Kỳ: 06/2026</pre>
+              <pre class="rule-code">Giải thích vì sao ghi như vậy:
+- Mục tiêu là “chuyển chỗ” tiền từ 111 sang 1111/1112, không tạo thêm tiền và không làm mất tiền.
+- Vì 111 đang chứa toàn bộ tiền mặt, nên khi tách ra:
+  - 111 phải giảm đúng phần chuyển đi → ghi Có 111.
+  - 1111/1112 phải tăng đúng phần nhận về → ghi Nợ 1111/1112.
+- Sau bút toán: tổng (111 + 1111 + 1112) không đổi, nhưng báo cáo theo quỹ sẽ đúng.</pre>
+              Kết quả: tổng nhóm 111+1111+1112 không đổi, nhưng báo cáo theo quỹ sẽ đúng tài khoản con.
+            </li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Pseudo-code</span>
+            <h3>Mẫu xử lý 1 event (gợi ý code)</h3>
+          </div>
+          <ul class="page-list">
+            <li>Tạo key: key = orgId + ':' + sourceType + ':' + sourceRef + ':' + docType.</li>
+            <li>IF tồn tại chứng từ theo key → return (idempotent) hoặc update (nếu chính sách cho phép).</li>
+            <li>Load mapping: tài khoản theo paymentMethod (111/112), tài khoản doanh thu (511.*), thuế (3331), kho (156/152), giá vốn (632), công nợ (131/331).</li>
+            <li>Tính tiền: beforeTax, vat, total; làm tròn theo cấu hình; validate total = sum(lines).</li>
+            <li>Build JournalLines: luôn tạo 2 bên Nợ/Có; validate SUM(debit)=SUM(credit).</li>
+            <li>IF thiếu mapping/thiếu giá vốn/thiếu customerRef/supplierRef → set status PendingFix + errorCode + errorMessage.</li>
+            <li>ELSE nếu autoPost → set Posted; ngược lại PendingApproval.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Nguyên tắc</span>
+            <h3>3 quy tắc để không sai nghiệp vụ</h3>
+          </div>
+          <ul class="page-list">
+            <li>Không “sửa bút toán đã ghi sổ”: muốn sửa thì tạo chứng từ đảo (reverse) rồi tạo chứng từ mới đúng.</li>
+            <li>Doanh thu và dòng tiền là 2 thứ khác nhau: có thể bán chịu (131) trước rồi thu tiền (111/112) sau.</li>
+            <li>Hàng hóa mới có giá vốn (632/156): dịch vụ thì không tạo phiếu kho và không có 632/156.</li>
+          </ul>
+        </article>
+
+        <article class="detail-block detail-block-full">
+          <div class="detail-block-header">
+            <span class="detail-chip">Cheat-sheet</span>
+            <h3>Bảng nhanh Nợ/Có cho Dev (Thu/Chi/Mua/Bán/Nhập/Xuất/Hoàn)</h3>
+          </div>
+          <ul class="page-list">
+            <li>
+              <strong>Nhớ nhanh:</strong>
+              <pre class="rule-code">Tiền/tồn kho/phải thu (111/112/156/131): tăng → Nợ, giảm → Có
+Phải trả/doanh thu/thuế (331/511/3331): tăng → Có, giảm → Nợ</pre>
+            </li>
+            <li>
+              <strong>Thu (tiền vào):</strong>
+              <pre class="rule-code">Thu bán hàng (thu ngay):
+Nợ 111/112   = tổng thanh toán
+  Có 511     = tiền chưa thuế
+  Có 3331    = VAT đầu ra
+
+Thu công nợ khách hàng:
+Nợ 111/112
+  Có 131
+
+Thu khác (không phải bán hàng):
+Nợ 111/112
+  Có 711</pre>
+            </li>
+            <li>
+              <strong>Chi (tiền ra):</strong>
+              <pre class="rule-code">Trả nhà cung cấp:
+Nợ 331
+  Có 111/112
+
+Chi phí vận hành (không qua mua hàng nhập kho):
+Nợ 642/641/627 (tùy loại chi phí)
+  Có 111/112
+
+Chi khác:
+Nợ 811
+  Có 111/112</pre>
+            </li>
+            <li>
+              <strong>Mua (nhận hàng/nhận hóa đơn):</strong>
+              <pre class="rule-code">Mua hàng hóa nhập kho (có VAT):
+Nợ 156/152   = tiền chưa thuế
+Nợ 1331      = VAT đầu vào
+  Có 331     = tổng phải trả
+
+Mua hàng hóa nhập kho (không VAT):
+Nợ 156/152
+  Có 331
+
+Mua dịch vụ/chi phí (có VAT):
+Nợ 642/641/627
+Nợ 1331
+  Có 331</pre>
+            </li>
+            <li>
+              <strong>Bán:</strong>
+              <pre class="rule-code">Bán chịu (chưa thu tiền):
+Nợ 131       = tổng thanh toán
+  Có 511     = tiền chưa thuế
+  Có 3331    = VAT đầu ra
+
+Bán dịch vụ:
+Không có 632/156 (không xuất kho, không giá vốn kho)</pre>
+            </li>
+            <li>
+              <strong>Xuất kho / Giá vốn (khi bán hàng hóa):</strong>
+              <pre class="rule-code">Giá vốn khi bán:
+Nợ 632
+  Có 156/152
+
+Xuất điều chỉnh (hao hụt/hư hỏng):
+Có 156/152
+  Nợ 632 hoặc 642 hoặc 811 (tùy lý do)</pre>
+            </li>
+            <li>
+              <strong>Nhập kho (ngoài mua hàng):</strong>
+              <pre class="rule-code">Kiểm kê thừa:
+Nợ 156/152
+  Có 711 (hoặc treo Có 3381)</pre>
+            </li>
+            <li>
+              <strong>Hoàn/Trả (refund/return):</strong>
+              <pre class="rule-code">Hoàn tiền (không trả hàng, giảm doanh thu):
+Nợ 511 (và Nợ 3331 phần VAT tương ứng)
+  Có 111/112 (tiền hoàn)
+
+Khách trả hàng + hoàn tiền:
+Nợ 511 (và Nợ 3331)
+  Có 111/112
+Đồng thời nhập lại kho:
+Nợ 156/152
+  Có 632</pre>
+            </li>
+          </ul>
+        </article>
+
+        <article class="detail-block">
+          <div class="detail-block-header">
+            <span class="detail-chip">Ví dụ</span>
+            <h3>Case mẫu để Dev test</h3>
+          </div>
+          <ul class="page-list">
+            <li>Bán 1.100.000 (VAT 10%): beforeTax=1.000.000, vat=100.000, thu tiền mặt; giá vốn 700.000.</li>
+            <li>Bút toán doanh thu: Nợ 111 1.100.000; Có 511 1.000.000; Có 3331 100.000.</li>
+            <li>Bút toán giá vốn: Nợ 632 700.000; Có 156 700.000.</li>
+            <li>Hoàn tiền 220.000 (1 phần): tạo phiếu chi + bút toán điều chỉnh doanh thu/thuế theo tỷ lệ; kiểm tra đối soát không lệch tổng thu.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div class="slideover-overlay" id="ruleOverlay" hidden></div>
+  <aside class="slideover" id="ruleSlideover" hidden aria-hidden="true">
+    <header class="slideover-header">
+      <div>
+        <h3 class="slideover-title" id="ruleSlideoverTitle">Ví dụ rule</h3>
+        <p class="slideover-subtitle" id="ruleSlideoverSubtitle">Bấm vào từng rule để xem input mẫu và bút toán kỳ vọng.</p>
+      </div>
+      <button class="slideover-close" type="button" id="ruleSlideoverClose" aria-label="Đóng">✕</button>
+    </header>
+    <div class="slideover-body" id="ruleSlideoverBody"></div>
+  </aside>
+
+  <template id="rule-example-pay-method-map">
+    <div class="rule-example">
+      <h4>Mapping phương thức thanh toán</h4>
+      <p>Rule này chỉ quyết định tài khoản “Nợ tiền” khi thu tiền. Các bút toán doanh thu/công nợ vẫn theo rule bán hàng.</p>
+      <div class="rule-meta">
+        <strong>Input mẫu</strong>
+      </div>
+      <pre class="rule-code">{
+  "paymentMethod": "CASH | BANK_TRANSFER | QR | CARD",
+  "amount": 1100000
+}</pre>
+      <div class="rule-meta">
+        <strong>Kết quả mapping</strong>
+      </div>
+      <pre class="rule-code">CASH          → debitAccount = 111
+BANK_TRANSFER  → debitAccount = 112
+QR             → debitAccount = 112
+CARD           → debitAccount = 112
+
+Nếu cần “chờ đối soát”:
+QR/CARD/BANK_TRANSFER → debitAccount = 113
+Khi đối soát xong      → chuyển 113 → 112</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-sale-paid-goods">
+    <div class="rule-example">
+      <h4>Bán hàng thu ngay (Hàng hóa)</h4>
+      <p>Đơn hoàn tất + đã thu tiền. Sinh 2 bút toán: doanh thu/thuế và giá vốn.</p>
+      <pre class="rule-code">Input:
+order.beforeTax = 1,000,000
+order.vat       =   100,000  (10%)
+order.total     = 1,100,000
+paymentMethod   = CASH
+cogs            =   700,000</pre>
+      <pre class="rule-code">Journal 1 (Doanh thu):
+Nợ 111  1,100,000
+  Có 511  1,000,000
+  Có 3331   100,000
+
+Journal 2 (Giá vốn):
+Nợ 632    700,000
+  Có 156    700,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-sale-unpaid-ar">
+    <div class="rule-example">
+      <h4>Bán chịu (Công nợ phải thu)</h4>
+      <p>Khi bán: ghi nhận công nợ 131. Khi thu tiền sau: tạo phiếu thu giảm công nợ.</p>
+      <pre class="rule-code">Case A - Lúc bán:
+beforeTax=1,000,000; vat=100,000; total=1,100,000; paymentStatus=UNPAID</pre>
+      <pre class="rule-code">Journal (Lúc bán):
+Nợ 131  1,100,000
+  Có 511  1,000,000
+  Có 3331   100,000</pre>
+      <pre class="rule-code">Case B - Lúc thu tiền sau:
+amount=1,100,000; paymentMethod=BANK_TRANSFER</pre>
+      <pre class="rule-code">Journal (Phiếu thu):
+Nợ 112  1,100,000
+  Có 131  1,100,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-sale-service">
+    <div class="rule-example">
+      <h4>Bán dịch vụ (không giá vốn kho)</h4>
+      <p>Dịch vụ không tạo phiếu kho và không có 632/156. Chỉ sinh doanh thu/thuế theo tiền thu hoặc công nợ.</p>
+      <pre class="rule-code">Input:
+goodsType=DỊCH_VỤ
+beforeTax=2,000,000; vat=200,000; total=2,200,000
+paymentStatus=PAID; paymentMethod=QR</pre>
+      <pre class="rule-code">Journal (Doanh thu):
+Nợ 112  2,200,000
+  Có 511  2,000,000
+  Có 3331   200,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-payment-success-receipt">
+    <div class="rule-example">
+      <h4>PaymentSuccess → sinh Phiếu thu (thu sau)</h4>
+      <p>Dùng khi hệ thống bán chịu hoặc payment xử lý tách rời bán hàng. Nếu đã có phiếu thu theo idempotencyKey thì bỏ qua.</p>
+      <pre class="rule-code">Input event:
+sourceType=PAYMENT
+sourceRef=PAY-00091
+orderRef=SO-1029
+customerRef=CUS-001
+amount=1,100,000
+paymentMethod=CARD</pre>
+      <pre class="rule-code">Journal (Phiếu thu):
+Nợ 112  1,100,000
+  Có 131  1,100,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-purchase-inv-vat">
+    <div class="rule-example">
+      <h4>Mua hàng nhập kho (có VAT)</h4>
+      <pre class="rule-code">Input:
+inventory=true; hasVAT=true
+beforeTax=5,000,000; vat=500,000; total=5,500,000
+supplierRef=SUP-01</pre>
+      <pre class="rule-code">Journal:
+Nợ 156  5,000,000
+Nợ 1331   500,000
+  Có 331  5,500,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-purchase-inv-novat">
+    <div class="rule-example">
+      <h4>Mua hàng nhập kho (không VAT)</h4>
+      <pre class="rule-code">Input:
+inventory=true; hasVAT=false
+total=5,500,000</pre>
+      <pre class="rule-code">Journal:
+Nợ 156  5,500,000
+  Có 331  5,500,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-purchase-exp-vat">
+    <div class="rule-example">
+      <h4>Mua dịch vụ/chi phí (có VAT)</h4>
+      <pre class="rule-code">Input:
+inventory=false; hasVAT=true; expenseType=QLDN
+beforeTax=1,000,000; vat=100,000; total=1,100,000</pre>
+      <pre class="rule-code">Journal (ví dụ expenseType=QLDN → 642):
+Nợ 642  1,000,000
+Nợ 1331   100,000
+  Có 331  1,100,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-purchase-exp-novat">
+    <div class="rule-example">
+      <h4>Mua dịch vụ/chi phí (không VAT)</h4>
+      <pre class="rule-code">Input:
+inventory=false; hasVAT=false; expenseType=BH
+total=800,000</pre>
+      <pre class="rule-code">Journal (ví dụ expenseType=BH → 641):
+Nợ 641    800,000
+  Có 331    800,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-supplier-pay">
+    <div class="rule-example">
+      <h4>Trả nhà cung cấp</h4>
+      <pre class="rule-code">Input:
+supplierRef=SUP-01
+amount=5,500,000
+paymentMethod=BANK_TRANSFER</pre>
+      <pre class="rule-code">Journal:
+Nợ 331  5,500,000
+  Có 112  5,500,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-stock-adjust-loss">
+    <div class="rule-example">
+      <h4>Xuất điều chỉnh hao hụt/hư hỏng</h4>
+      <p>Ví dụ: kiểm kê phát hiện hư hỏng hàng tồn. Tài khoản Nợ phụ thuộc lý do (reason).</p>
+      <pre class="rule-code">Input:
+reason=HU_HONG
+inventoryValue=300,000</pre>
+      <pre class="rule-code">Journal (ví dụ reason=HU_HONG → 811):
+Nợ 811    300,000
+  Có 156    300,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-stockcount-missing">
+    <div class="rule-example">
+      <h4>Kiểm kê thiếu</h4>
+      <pre class="rule-code">Input:
+stockCountResult=THIEU
+inventoryValue=120,000</pre>
+      <pre class="rule-code">Option A (ghi nhận ngay):
+Nợ 642/811/632  120,000
+  Có 156         120,000
+
+Option B (treo chờ xử lý):
+Nợ 1381         120,000
+  Có 156         120,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-stockcount-extra">
+    <div class="rule-example">
+      <h4>Kiểm kê thừa</h4>
+      <pre class="rule-code">Input:
+stockCountResult=THUA
+inventoryValue=200,000</pre>
+      <pre class="rule-code">Option A (ghi nhận ngay):
+Nợ 156    200,000
+  Có 711    200,000
+
+Option B (treo chờ xử lý):
+Nợ 156    200,000
+  Có 3381   200,000</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-multi-lines">
+    <div class="rule-example">
+      <h4>1 phiếu nhiều mặt hàng (nhiều VAT, nhiều phương thức, nhiều kho)</h4>
+      <p>Ví dụ này minh họa cách gom nhóm doanh thu/thuế theo thuế suất, tách dòng tiền theo phương thức và tách tồn kho theo kho.</p>
+      <pre class="rule-code">Input (Sales Order):
+paymentStatus=PAID
+payments:
+  - CASH: 600,000
+  - BANK_TRANSFER: 1,050,000
+
+lines:
+  1) Hàng hóa A (VAT 10%)  qty=1  unitPrice=1,000,000  beforeTax=1,000,000  vat=100,000  total=1,100,000  warehouse=KHO-1  cogs=700,000
+  2) Hàng hóa B (VAT 0%)   qty=1  unitPrice=400,000    beforeTax=400,000    vat=0        total=400,000    warehouse=KHO-2  cogs=250,000
+  3) Dịch vụ C  (VAT 10%)  qty=1  unitPrice=136,364    beforeTax=136,364    vat=13,636   total=150,000    warehouse=N/A    cogs=N/A
+
+Tổng:
+beforeTax=1,536,364
+vat=113,636
+total=1,650,000</pre>
+
+      <pre class="rule-code">Journal (Doanh thu + thuế + dòng tiền) - Gom theo thuế suất:
+Nợ 111 (CASH)           600,000
+Nợ 112 (BANK)         1,050,000
+  Có 511 (VAT 10%)    1,136,364   (A 1,000,000 + C 136,364)
+  Có 511 (VAT 0%)       400,000   (B 400,000)
+  Có 3331 (VAT 10%)     113,636   (A 100,000 + C 13,636)</pre>
+
+      <pre class="rule-code">Journal (Giá vốn + giảm tồn) - Tách theo kho:
+Nợ 632                 950,000   (700,000 + 250,000)
+  Có 156 (KHO-1)       700,000
+  Có 156 (KHO-2)       250,000
+
+Ghi chú:
+- Dòng dịch vụ không sinh 632/156.
+- Nếu muốn truy vết sâu hơn, có thể tách Nợ 632 theo item/kho thay vì gom.</pre>
+
+      <pre class="rule-code">Xử lý làm tròn:
+- Làm tròn ở cấp line (beforeTax/vat/total) theo cấu hình.
+- Nếu tổng VAT lệch 1-2 đồng do làm tròn: điều chỉnh vào dòng VAT lớn nhất hoặc tài khoản chênh lệch làm tròn (theo cấu hình).</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-auto-mapping-endtoend">
+    <div class="rule-example">
+      <h4>Bài toán end-to-end: Bán 1 đơn nhiều mặt hàng</h4>
+      <p>Mục tiêu: sau khi bán xong, hệ thống tự sinh chứng từ và tự đưa vào đúng tài khoản để báo cáo lên đúng mà không phải nhập lại.</p>
+
+      <pre class="rule-code">1) Dữ liệu nguồn bắt buộc phải có (từ POS/App):
+- orderNo, orderDate, branchId
+- lines[]: itemId, itemGroupId, lineType(HÀNG_HÓA/DỊCH_VỤ), qty, unitPrice, taxRate, warehouseId (nếu hàng hóa)
+- payments[]: method(CASH/BANK_TRANSFER/QR/CARD), amount
+- customerRef (nếu bán chịu), invoiceRef (nếu xuất HĐ)
+- idempotencyKey: orgId + orderNo + docType</pre>
+
+      <pre class="rule-code">2) Cấu hình mapping tối thiểu (Admin cấu hình 1 lần):
+- paymentMethod → tài khoản tiền: CASH→111; BANK/QR/CARD→112 (hoặc 113 nếu chờ đối soát)
+- itemGroupId (+ branchId) → tài khoản doanh thu: 511.x
+- taxRate → 3331 (VAT đầu ra)
+- warehouseId (+ itemGroupId) → tài khoản tồn kho: 156.x hoặc 152.x
+- COGS → 632 (có thể tách theo nhóm hàng nếu muốn)
+- AR/AP: 131/331</pre>
+
+      <pre class="rule-code">3) Sinh chứng từ nào khi bán xong?
+Case A: Thu ngay
+  - Chứng từ Bán (Sales Posting) → bút toán 511/3331
+  - Phiếu thu (Receipt) → bút toán 111/112 (hoặc ghi gộp vào chứng từ bán tuỳ thiết kế)
+  - Phiếu xuất kho (Stock Out) → giảm tồn
+  - Bút toán giá vốn (COGS) → 632/156
+
+Case B: Bán chịu
+  - Chứng từ Bán → 131/511/3331
+  - Khi PaymentSuccess sau đó → Phiếu thu 111/112 → 131
+  - Xuất kho + Giá vốn như Case A</pre>
+
+      <pre class="rule-code">4) Thuật toán đưa đúng tài khoản (dev code):
+For each order line:
+  revenueAccount = resolveAccount(docType=SALE, accountType=REVENUE, itemId, itemGroupId, branchId, taxRate)
+  vatAccount     = resolveAccount(docType=SALE, accountType=VAT_OUT, taxRate)
+  invAccount     = resolveAccount(docType=STOCK, accountType=INVENTORY, warehouseId, itemGroupId, branchId)
+
+Group để ghi sổ:
+  - Doanh thu/thuế: group theo (revenueAccount, taxRate)
+  - Tồn kho: group theo (invAccount, warehouseId)
+  - Tiền: group theo paymentMethod (111/112/113)
+
+Giá vốn:
+  cogs = sum(cost(itemId, warehouseId, qty)) theo FIFO/Bình quân
+  Nợ 632 = tổng cogs; Có 156 = cogs theo kho (hoặc theo item nếu muốn chi tiết)</pre>
+
+      <pre class="rule-code">5) Báo cáo tự lên đúng bằng cách nào?
+Chìa khóa là mọi JournalLine đều có dimension:
+  - branchId, warehouseId, itemGroupId, taxRate, partnerRef (nếu 131/331)
+Khi đã Posted:
+  - Báo cáo doanh thu: SUM(Có 511) group theo branchId, itemGroupId, taxRate
+  - Báo cáo VAT: SUM(Có 3331) group theo taxRate/branchId
+  - Báo cáo tồn kho: SUM(Có/Nợ 156) group theo warehouseId, itemGroupId
+  - Báo cáo giá vốn/lãi gộp: SUM(Nợ 632) vs SUM(Có 511)</pre>
+
+      <pre class="rule-code">6) 3 lỗi phổ biến làm “không đúng báo cáo”:
+1) Không gắn dimension (branch/warehouse/itemGroup/taxRate) lên JournalLine → báo cáo không group đúng
+2) Không idempotent → sinh trùng chứng từ khi đồng bộ lại
+3) Giá vốn chưa có (missing cost) nhưng vẫn auto-post → sai 632/156</pre>
+    </div>
+  </template>
+
+  <template id="rule-example-auto-post-conditions">
+    <div class="rule-example">
+      <h4>Điều kiện auto-post</h4>
+      <p>Nếu thiếu bất kỳ điều kiện nào, chuyển chứng từ sang PendingFix/PendingApproval để kế toán xử lý.</p>
+      <pre class="rule-code">Auto-post = true khi:
+1) Đủ mapping accountNo cho tất cả lines
+2) Dùng 131 thì bắt buộc có customerRef; dùng 331 thì bắt buộc có supplierRef
+3) Có giá vốn khi phát sinh 632/156 (hàng hóa)
+4) SUM(debit) == SUM(credit)
+5) Không vi phạm khóa kỳ (period locked)</pre>
+    </div>
+  </template>
+
+  <script>
+    (() => {
+      const overlay = document.getElementById('ruleOverlay');
+      const slideover = document.getElementById('ruleSlideover');
+      const closeBtn = document.getElementById('ruleSlideoverClose');
+      const titleEl = document.getElementById('ruleSlideoverTitle');
+      const subtitleEl = document.getElementById('ruleSlideoverSubtitle');
+      const bodyEl = document.getElementById('ruleSlideoverBody');
+
+      const open = (ruleKey, title) => {
+        const template = document.getElementById(`rule-example-${ruleKey}`);
+        if (!template) {
+          return;
+        }
+
+        titleEl.textContent = title || 'Ví dụ rule';
+        subtitleEl.textContent = 'Input mẫu và bút toán kỳ vọng để Dev triển khai đúng.';
+        bodyEl.innerHTML = '';
+        bodyEl.appendChild(template.content.cloneNode(true));
+
+        overlay.hidden = false;
+        slideover.hidden = false;
+        overlay.classList.add('open');
+        slideover.classList.add('open');
+        slideover.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('slideover-open');
+      };
+
+      const close = () => {
+        overlay.classList.remove('open');
+        slideover.classList.remove('open');
+        slideover.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('slideover-open');
+        window.setTimeout(() => {
+          overlay.hidden = true;
+          slideover.hidden = true;
+          bodyEl.innerHTML = '';
+        }, 220);
+      };
+
+      document.querySelectorAll('.rule-trigger[data-rule]').forEach((button) => {
+        button.addEventListener('click', () => {
+          open(button.dataset.rule, button.dataset.ruleTitle);
+        });
+      });
+
+      overlay.addEventListener('click', close);
+      closeBtn.addEventListener('click', close);
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !slideover.hidden) {
+          close();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
